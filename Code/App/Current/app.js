@@ -8,13 +8,10 @@ const myEvening = document.body.querySelector(".myEvening");
 const blockContainer = document.body.querySelector(".container");
 const button_addBlock = document.body.querySelector(".button--addBlock");
 button_addBlock.addEventListener("click", addBlock);
+const button_saveEvening = document.body.querySelector(".button--saveEvening");
+button_saveEvening.addEventListener("click", saveEvening);
 
-let blockListBis = document.getElementsByClassName("activityBlock");//Puisque getElementsByClassName ne renvoit pas un array, on crée une var intermédiaire afin de recueillir les données.
 var blockList = [];
-for(let i = 0; i < blockListBis.length; i++){
-	blockList.push(blockListBis[i]);
-}
-
 var howManyBlocks = 0;
 
 const timeBeforeMovable = 900;
@@ -26,7 +23,7 @@ var selectedBlock;
 var movingTimer;
 
 setMyEvening();
-initBlockContainer();
+//initBlockContainer();
 
 
 function setMyEvening(){
@@ -88,6 +85,27 @@ function addBlock(){
 	let newBlock = setBlock(howManyBlocks);
 	newBlock.style.order = howManyBlocks;
 	blockContainer.appendChild(newBlock);
+	blockList.push(newBlock);
+}
+
+
+function saveEvening(){
+	console.log("Save Evening");
+	let eveningData = [];
+	let activityData = {
+		id: 'id',
+		class: 'class',
+		order: 0
+	};
+
+	blockList.forEach((block) => {
+		activityData.id = block.getAttribute("data-activityID");
+		activityData.class = block.className;
+		activityData.order = block.style.order;
+		eveningData.push(activityData);
+	});
+
+	console.log(eveningData);
 }
 
 
@@ -95,6 +113,7 @@ function startMovingTimer(){
 	justClicking = false;
 	movingTimer = setTimeout(startMovingBlock, timeBeforeMovable);
 }
+
 
 function startMovingBlock(e){
 	blockIsMoving = true;
