@@ -1,5 +1,43 @@
+ul{
+	padding: 0;
+}
+
+li{
+	list-style: none;
+}
+
 .page{
 	display: none;
+}
+
+.timetable{
+	padding: 30px;
+	width: 240px;
+	position: relative;
+	background-color: gray;
+	display: flex;
+	flex-direction: column;
+}
+
+.timebrick{
+	position: relative;
+	width: 100%;
+	height: 50px;
+	margin-bottom: 20px;
+}
+
+.timebrick__interface{
+	height: 100%;
+	width: 100%;
+	background-color: white;
+}
+
+.timebrick__interface--moving{
+	transform: scale(1.1, 1.1);
+	-webkit-box-shadow: 10px 10px 22px 0px rgba(0,0,0,0.53);
+	-moz-box-shadow: 10px 10px 22px 0px rgba(0,0,0,0.53);
+	box-shadow: 10px 10px 22px 0px rgba(0,0,0,0.53);
+	pointer-events: none;
 }
 
 body[data-page="timetableSelection"] .timetableSelection{
