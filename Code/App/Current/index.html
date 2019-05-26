@@ -9,34 +9,43 @@
 	<link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
 <body data-page="timetableSelection">
-	<!--
-	<section class="myEvening">
-		<h1 class="evening__title">My Evening</h1>
-		<div class="container">
-		</div>
-	</section>
-	-->
 
-    <section class="page timetableSelection">
-    	<h1 class="title">Timetable Selection</h1>
+    <section class="page timetableSelection" data-isempty='yes'>
+    	<h1 class="title title--timetableSelection">My Timetables</h1>
+        <p class="disclaimer">Appuyer sur le "+" pour ajouter une nouvelle journée d'animation.</p>
     	<ul class="timetable__li">
-    		<h2>My timetables</h2>
 
     	</ul>
-    	<button class="createNewTimetable">New Timetable</button>
+    	<button class="buttonAdd createNewTimetable">+</button>
     </section>
 
     <section class="page timetableEditor">
     	<button class="backToTimetableSelection">Back</button>
+    	<!--
     	<button class="saveTimetable">Save</button>
-    	<h1 class="title title--timetable">Timetable Title</h1>
+    -->
+    	<h1 class="title title--timetable" contenteditable="true">Ma timetable</h1>
     	<ul class="timetable">
     		
     	</ul>
-    	<button class="addTimebrick">Add timebrick</button>
+    	<button class="buttonAdd setTimebrick">+</button>
+    </section>
+
+    <section class="page timebrickEditor">
+    	<button class="backToTimetableEditor">Back</button>
+    	<button class="previousTimebrick">Previous</button>
+    	<button class="nextTimebrick">Next</button>
+    	<h1>Ma Timebrick</h1>
+    	<form class="timebrickForm">
+    		<input class="timebrickForm__name" type="text" name="timebrickName" value="Name">
+    		<input class="timebrickForm__description" type="text" name="timebrickDescription" value="Description">
+    		<input class="timebrickForm__duration" type="number" name="timebrickDuration" min="5" max="240" value="5">
+    		<input class="addTimebrick" type="submit" name="timebrickSubmit">
+    	</form>
     </section>
 
     <script src="timetable_selection.js"></script>
 	<script src="timetable_editor.js"></script>
+	<script src="timebrick_editor.js"></script>
 </body>
 </html>

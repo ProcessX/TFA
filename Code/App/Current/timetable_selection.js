@@ -1,7 +1,7 @@
 /*---------------------------CONST-------------------------------------------------------------------------*/
-const timetableList = document.body.querySelector(".timetable__li");
+const timetableList = document.querySelector(".timetable__li");
 
-const button_createNewTimetable = document.body.querySelector(".createNewTimetable");
+const button_createNewTimetable = document.querySelector(".createNewTimetable");
 
 const localStorage_timetableList = "timetableList";
 
@@ -25,6 +25,7 @@ button_createNewTimetable.addEventListener("click", (e) => {
 	let newTimetableData = Object.create(timetableData_base);
 	newTimetableData.id = timetableCounter;//Possiblement va changer.
 	newTimetableData.content = [];
+	newTimetableData.title = "Ma timetable " + timetableCounter;
 	setTimetable(newTimetableData);
 	document.body.setAttribute("data-page", "timetableEditor");
 });
@@ -42,11 +43,11 @@ setTimetableList();
 function setTimetableList(){
 	let timetableListInMemory = JSON.parse(localStorage.getItem(localStorage_timetableList));
 	timetableCounter = 0;
+	console.log(timetableListInMemory);
 	if(timetableListInMemory === null){
 		localStorage.setItem(localStorage_timetableList, "[]");
 	}
 	else{
-		console.log("Set timetable list");
 		let i;
 		for(i = 0; i < timetableListInMemory.length; i++)
 			addTimetableToList(timetableListInMemory[i]);
@@ -62,7 +63,8 @@ function addTimetableToList(timetableData){
 	timetableCounter += 1;
 
 	let newTimetable = document.createElement("li");
-	newTimetable.innerHTML = timetableData.id;
+	newTimetable.classList.add("timetable__el");
+	newTimetable.innerHTML = timetableData.title;
 	newTimetable.setAttribute("data-timetable-id", timetableData.id);
 	newTimetable.addEventListener("click", (e) => {
 		let timetableId = parseInt(e.target.getAttribute("data-timetable-id"));

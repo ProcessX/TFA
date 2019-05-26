@@ -1,11 +1,11 @@
 /*---------------------------CONST-------------------------------------------------------------------------*/
-const timetableTitle = document.body.querySelector(".title--timetable");
-const timetable = document.body.querySelector(".timetable");
-const timetableEditor = document.body.querySelector(".timetableEditor");
+const timetableTitle = document.querySelector(".title--timetable");
+const timetable = document.querySelector(".timetable");
+const timetableEditor = document.querySelector(".timetableEditor");
 
-const button_backToTimetableSelection = document.body.querySelector(".backToTimetableSelection");
-const button_saveTimetable = document.body.querySelector(".saveTimetable");
-const button_addTimebrick = document.body.querySelector(".addTimebrick");
+const button_backToTimetableSelection = document.querySelector(".backToTimetableSelection");
+//const button_saveTimetable = document.querySelector(".saveTimetable");
+const button_setTimebrick = document.querySelector(".setTimebrick");
 
 //Cet object donne la structure de données nécessaire pour paramétrer une Timetable.
 const timetableData_base = {
@@ -18,6 +18,8 @@ const timetableData_base = {
 const timebrickData_base = {
 	name: 'name',
 	class: 'class',
+	description: 'description',
+	duration: 5,
 	order: 0
 }
 
@@ -36,10 +38,15 @@ var isMoving = false;
 var clickHoldingTimer = 0;
 var movingBrick;
 var movingBrickInterface;
-var mouseStartX;
-var mouseStartY;
+var currentClientX;
+var currentClientY;
+var mouseStartX = -1;
+var mouseStartY = -1;
 var mouseOffsetX;
 var mouseOffsetY;
+var mouseOffsetYCorrection;
+
+var timebrickListDOM = [];
 
 
 
@@ -47,16 +54,23 @@ var mouseOffsetY;
 
 /*---------------------------INIT-------------------------------------------------------------------------*/
 button_backToTimetableSelection.addEventListener("click", (e) => {
+	saveTimetable(currentTimetableData);
 	document.body.setAttribute("data-page", "timetableSelection");
 });
 
+/*
 button_saveTimetable.addEventListener("click", (e) => {
 	saveTimetable(currentTimetableData);
 });
+*/
 
-button_addTimebrick.addEventListener("click", (e) => {
+button_setTimebrick.addEventListener("click", (e) => {
 	let newTimebrickData = Object.create(timebrickData_base);
-	addTimebrick(newTimebrickData);
+	//newTimebrickData.name = "" + timebrickCounter;
+	newTimebrickData.order = timebrickCounter;
+	setTimebrickEditor(newTimebrickData);
+	document.body.setAttribute('data-page', 'timebrickEditor');
+	//addTimebrick(newTimebrickData);
 });
 
 setBrickDisplacementSystem();
@@ -69,22 +83,21 @@ setBrickDisplacementSystem();
 /*---------------------------FUNCTIONS-------------------------------------------------------------------------*/
 //Paramètre la Timetable en fonction des données entrées en paramètre.
 function setTimetable(timetableData){
-	console.log("Set timetable");
-	console.log(timetableData);
+	timebrickCounter = 0;
 	timetable.innerHTML = "";
-	timetableTitle.innerHTML = "Timetable " + timetableData.id;
+	timetableTitle.innerHTML = timetableData.title;
 	currentTimetableData.id = timetableData.id;
 	currentTimetableData.content = [];
 	for(let i = 0; i < timetableData.content.length; i++){
 		addTimebrick(timetableData.content[i]);
 	}
-	timebrickCounter = currentTimetableData.content.length;
 }
 
 
 //Enregistre la Timetable dans le local storage.
 function saveTimetable(timetableData){
 	console.log("Save timetable");
+	timetableData.title = timetableTitle.innerHTML;
 	let currentDate = new Date();
 	timetableData.date = currentDate.getDate() + "-" + currentDate.getMonth() + "-" + currentDate.getFullYear();
 	let timetableListInMemory = JSON.parse(localStorage.getItem(localStorage_timetableList));
@@ -92,42 +105,53 @@ function saveTimetable(timetableData){
 		return timetableData.id === e.id;
 	});
 	if(timetableIndexIfAlreadySaved === -1){
-		console.log("New memory slot");
 		timetableListInMemory.push(timetableData);
 		addTimetableToList(currentTimetableData);
 	}
 	else{
-		console.log("Overwritten");
 		timetableListInMemory[timetableIndexIfAlreadySaved] = timetableData;
 	}
 	localStorage.setItem(localStorage_timetableList, JSON.stringify(timetableListInMemory));
-
+	console.log(timetableData);
 }
 
 
 //Ajoute un Timebrick à la Timetable, correpondant aux données passées en paramètre.
 function addTimebrick(timebrickData){
-	console.log("Add a timebrick");
 
-	timebrickData.order = timebrickCounter;
 	currentTimetableData.content.push(timebrickData);
 
 	let newTimebrick = document.createElement('li');
-	newTimebrick.style.order = timebrickCounter;
+	newTimebrick.style.order = timebrickData.order;
 	newTimebrick.classList.add("timebrick");
+	newTimebrick.classList.add(timebrickData.class);
 
 	let newTimebrick__interface = document.createElement('div');
 	newTimebrick__interface.classList.add("timebrick__interface")
 	newTimebrick__interface.addEventListener("mouseover", (e) => {
 		if(isMoving){
+			getNewOffsetY(e.target.parentNode);
 			changeOrderWith(e.target.parentNode);
+			saveTimetable(currentTimetableData);
 		}
 	});
-	//For test purpose
-	newTimebrick__interface.innerHTML = timebrickCounter;
+	newTimebrick__interface.addEventListener('touchstart', (e) => {
+		if(isMoving){
+			e.preventDefault();
+			e.target.dispatchEvent(e);
+			console.log(e.target);
+		}
+	});
+
+	newTimebrick__name = document.createElement('h2');
+	newTimebrick__name.classList.add('timebrick__name');
+	newTimebrick__name.innerHTML = timebrickData.name;
+	newTimebrick__interface.appendChild(newTimebrick__name);
+	
 
 	let button_removeTimebrick = document.createElement('button');
 	button_removeTimebrick.innerHTML = 'X';
+	button_removeTimebrick.classList.add('timebrick__remove');
 	button_removeTimebrick.addEventListener('click', (e) => {
 		removeTimebrick(newTimebrick);
 	});
@@ -136,6 +160,8 @@ function addTimebrick(timebrickData){
 	newTimebrick.appendChild(newTimebrick__interface);
 
 	timetable.appendChild(newTimebrick);
+
+	timebrickListDOM.push(newTimebrick);
 
 	timebrickCounter += 1;
 }
@@ -147,57 +173,169 @@ function removeTimebrick(timebrickToRemove){
 	let timebrickToRemoveIndex = timebrickToRemove.style.order;
 	currentTimetableData.content.splice(timebrickToRemoveIndex, 1);
 	timebrickCounter -= 1;
+	timebrickListDOM.splice(timebrickToRemoveIndex, 1);
+
+	for(let i = 0; i < timebrickCounter; i++){
+		currentTimetableData.content[i].order = i;
+		timebrickListDOM[i].style.order = i;
+	}
+	saveTimetable(currentTimetableData);
 }
 
 
 //Met en place le système de déplacement des Timebricks.
 function setBrickDisplacementSystem(){
-	timetableEditor.addEventListener("mousedown", (e) => {
-		console.log(e.clientX);
-		if(e.target.classList.contains("timebrick__interface")){
-			isClicking = true;
-			movingBrickInterface = e.target;
-			movingBrick = movingBrickInterface.parentNode;
-			console.log("Is clicking");
-			clickHoldingTimer = setTimeout((e) => {
-				clickHoldingTimer = setTimeout((e) => {
-					isMoving = true;
-					//mouseStartX = e.clientX;
-					//mouseStartY = e.clientY;
-					console.log("Moving");
-					movingBrickInterface.classList.toggle("timebrick__interface--moving");
-				}, timeBeforeOpeningBrick - 100);
-			}, 100);
-		}
-	});
+	
+	timetableEditor.oncontextmenu = function(event) {
+	     event.preventDefault();
+	     event.stopPropagation();
+	     return false;
+	};
 
-	timetableEditor.addEventListener("mouseup", (e) => {
-		if(isClicking){
-			isClicking = false;
-			console.log("Is no longer clicking");
-			if(isMoving){
-				isMoving = false;
-				movingBrickInterface.classList.toggle("timebrick__interface--moving");
-			}else{
-				clearTimeout(clickHoldingTimer);
-				console.log("Just clicking");
-			}
-		}
-	});
 
-	timetableEditor.addEventListener("mousemove", (e) => {
-		if(isMoving){
-			//mouseOffsetX = e.clientX - 
-		}
-	})
+	timetableEditor.addEventListener("mousedown", selectTimebrick);
+	timetableEditor.addEventListener('mouseup', dropTimebrick);
+	timetableEditor.addEventListener("mousemove", moveTimebrick);
+
+	timetableEditor.addEventListener('touchstart', selectTimebrick);
+	timetableEditor.addEventListener('touchend', dropTimebrick);
+	timetableEditor.addEventListener('touchmove', moveTimebrick);
 }
+
+
+function selectTimebrick(e){
+	e.preventDefault();
+
+	if(e.target.classList.contains("timebrick__interface")){
+		isClicking = true;
+		movingBrickInterface = e.target;
+		movingBrickInterface.style.transition = '0s';
+		movingBrick = movingBrickInterface.parentNode;
+		/*
+		clickHoldingTimer = setTimeout((e) => {
+			clickHoldingTimer = setTimeout((e) => {
+				isMoving = true;
+				movingBrickInterface.classList.toggle("timebrick__interface--moving");
+			}, timeBeforeOpeningBrick - 100);
+		}, 100);
+		*/
+		clickHoldingTimer = setTimeout((e) => {
+			isMoving = true;
+			movingBrickInterface.classList.toggle("timebrick__interface--moving");
+		}, timeBeforeOpeningBrick - 100);
+	}
+}
+
+
+function dropTimebrick(e){
+	e.preventDefault();
+
+	if(isClicking){
+		isClicking = false;
+		if(isMoving){
+			isMoving = false;
+			movingBrickInterface.classList.toggle("timebrick__interface--moving");
+			movingBrickInterface.style.transform = 'translate(0px)';
+			movingBrickInterface.style.transition = '1s';
+			mouseStartX = -1;
+			mouseStartY = -1;
+		}else{
+			clearTimeout(clickHoldingTimer);
+			let timebrickToEdit = currentTimetableData.content[movingBrick.style.order];
+			setTimebrickEditor(timebrickToEdit);
+			document.body.setAttribute('data-page', 'timebrickEditor');
+		}
+	}
+}
+
+
+function moveTimebrick(e){
+	e.preventDefault();
+
+	if(isMoving){
+		if(e.type === 'mousemove'){
+			currentClientX = e.clientX;
+			currentClientY = e.clientY;
+		}
+		else{
+			currentClientX = e.touches[0].clientX;
+			currentClientY = e.touches[0].clientY;
+		}
+
+		checkTimebricksCoord();
+
+		if(mouseStartX === -1){
+			mouseStartX = currentClientX;
+			mouseStartY = currentClientY;
+			mouseOffsetYCorrection = mouseStartY - movingBrick.getBoundingClientRect().top;
+		}
+		mouseOffsetX = currentClientX - mouseStartX;
+		mouseOffsetY = currentClientY - mouseStartY;
+		//A ajouter plus tard : un scale. Faire gaffe, parce que ça fout complètement la merde dans les calculs de positions.
+		movingBrickInterface.style.transform = `translate(${mouseOffsetX}px,${mouseOffsetY}px)`;
+	}
+}
+
 
 
 //Échange l'ordre de la Timebrick passée en paramètre avec celui de la Timebrick en mouvement.
 function changeOrderWith(brickToChangeWith){
 	let movingBrickOrder = movingBrick.style.order;
 	let brickToChangeWithOrder = brickToChangeWith.style.order;
-	console.log("Change order between " + movingBrickOrder + " and " + brickToChangeWithOrder);
 	movingBrick.style.order = brickToChangeWithOrder;
 	brickToChangeWith.style.order = movingBrickOrder;
+
+	let movingBrickData = currentTimetableData.content[movingBrickOrder];
+	movingBrickData.order = brickToChangeWithOrder;
+	currentTimetableData.content[movingBrickOrder] = currentTimetableData.content[brickToChangeWithOrder];
+	currentTimetableData.content[movingBrickOrder].order = movingBrickOrder;
+	currentTimetableData.content[brickToChangeWithOrder] = movingBrickData;
+
+	timebrickListDOM[movingBrickOrder] = brickToChangeWith;
+	timebrickListDOM[brickToChangeWithOrder] = movingBrick;
+}
+
+
+//Calcule le nouvel offsetY lors d'un échange de places.
+//Version actuelle : toutes les bricks ont les mêmes margins top et bottom, mais des hauteurs différentes sont autorisées.
+function getNewOffsetY(brickToChangeWith){
+	let movingBrickStyle = movingBrick.currentStyle || window.getComputedStyle(movingBrick);
+	let brickToChangeWithStyle = brickToChangeWith.currentStyle || window.getComputedStyle(brickToChangeWith);
+	let mouseDirection = Math.sign(brickToChangeWith.style.order - movingBrick.style.order);
+	let mouseCorrection = mouseOffsetYCorrection;
+	let heightDifference = brickToChangeWith.offsetHeight - movingBrick.offsetHeight;
+	//let marginDifference = (parseInt(brickToChangeWithStyle.marginTop) - parseInt(movingBrickStyle.marginTop)) + (parseInt(brickToChangeWithStyle.marginBottom) - parseInt(movingBrickStyle.marginBottom));
+
+	if(mouseDirection < 0){
+		mouseCorrection = movingBrick.offsetHeight - mouseOffsetYCorrection;
+	}
+	mouseStartY = currentClientY + (mouseCorrection * mouseDirection);
+	mouseStartY += heightDifference * mouseDirection;
+	//mouseStartY += marginDifference * mouseDirection;
+
+}
+
+
+//Permet de modifier un élément du DOM sans le supprimer ou le recréer.
+function updateTimebrick(timebrickData){
+	let timebrickToUpdate = timebrickListDOM[timebrickData.order];
+	timebrickToUpdate.childNodes[0].childNodes[0].innerHTML = timebrickData.name;
+	timebrickToUpdate.className = "";
+	timebrickToUpdate.classList.add("timebrick");
+	timebrickToUpdate.classList.add(timebrickData.class);
+}
+
+
+function checkTimebricksCoord(){
+	let timebrickCoord;
+	timebrickListDOM.forEach((e) => {
+		if(e != movingBrick){
+			timebrickCoord = e.getBoundingClientRect();
+			console.log(timebrickCoord.top + ', ' + currentClientY);
+
+			if(currentClientY >= timebrickCoord.top || currentClientY <= timebrickCoord.bottom){
+				console.log('HAHAHAHAHAHAHAHAHAHAHA');
+			}
+		}
+	});
 }
