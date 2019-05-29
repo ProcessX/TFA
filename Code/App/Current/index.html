@@ -7,32 +7,64 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link rel="stylesheet" type="text/css" href="stylesheet.css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito%7COpen+Sans&display=swap" rel="stylesheet">
 </head>
 <body data-page="timetableSelection">
 
-    <section class="page timetableSelection" data-isempty='yes'>
-    	<h1 class="title title--timetableSelection">My Timetables</h1>
-        <p class="disclaimer">Appuyer sur le "+" pour ajouter une nouvelle journée d'animation.</p>
-    	<ul class="timetable__li">
 
-    	</ul>
-    	<button class="buttonAdd createNewTimetable">+</button>
+	<section class="page timetableSelection" data-isempty='yes'>
+    	<h1 class="title title--timetableSelection title--white">Mes animations</h1>
+    	<!--
+        <p class="disclaimer">Appuyer sur le "+" pour ajouter une nouvelle journée d'animation.</p>
+        -->
+    	<ul class="timetable__li"></ul>
+    	<button class="buttonAdd buttonAdd--createNewTimetable">+</button>
     </section>
 
     <section class="page timetableEditor">
-    	<button class="backToTimetableSelection">Back</button>
-    	<!--
-    	<button class="saveTimetable">Save</button>
-    -->
-    	<h1 class="title title--timetable" contenteditable="true">Ma timetable</h1>
-    	<ul class="timetable">
-    		
-    	</ul>
-    	<button class="buttonAdd setTimebrick">+</button>
+    	<button class="buttonBackTo buttonBackTo--TimetableSelection">Back</button>
+    	<button class="buttonRevealForm">Reveal</button>
+    	<h1 class="title title--timetableEditor title--white">Ma timetable</h1>
+    	
+    	<div class="timetable__setter">
+    		<form class="timetable__form">
+
+    			<label for="timetableDate" >Date</label>
+    			<input type="date" name="timetableDate" id="timetableDate" class="timetable__parameter timetable__parameter--date">
+
+				<label for="timetableDurationMin">Durée</label>
+    			<div class="timetable__parameterContainer timetable__parameterContainer--duration">
+    				<input type="time" name="timetableDurationMin" id="timetableDurationMin" class="timetable__parameter timetable__parameter--duration timetable__parameter--duration--min">
+    				<input type="time" name="timetableDurationMax" id="timetableDurationMax" class="timetable__parameter timetable__parameter--duration timetable__parameter--duration--max">
+    			</div>
+
+    			<div class="timetable__parameterContainer">
+    				<label for="timetableAgeMin">Âge</label>
+    				<p class="timetable__parameter__age__display">4 - 18 ans</p>
+    			</div>
+    			<div class="timetable__parameterContainer timetable__parameterContainer--age">
+    				<input type="range" name="timetableAgeMin" id="timetableAgeMin" class="timetable__parameter timetable__parameter--age timetable__parameter--age--min" min="4" max="18" value="4" onchange="checkAgeParameter()">
+    				<input type="range" name="timetableAgeMax" id="timetableAgeMax" class="timetable__parameter timetable__parameter--age timetable__parameter--age--max" min="4" max="18" value="18" onchange="checkAgeParameter()">
+    			</div>
+
+    			<label for="timetableTheme">Thème</label>
+    			<input type="text" name="timetableTheme" id="timetableTheme" class="timetable__parameter timetable__parameter--theme">
+
+    			<label for="timetableSummary">Résumé</label>
+    			<input type="text" name="timetableSummary" id="timetableSummary" class="timetable__parameter timetable__parameter--summary">
+
+    			<input class="buttonValidateForm" type="submit" name="timetable__parameter__validate" value="Valider">
+    		</form>
+    	</div>
+    
+
+    	
+    	<ul class="timetable"></ul>
+    	<button class="buttonAdd buttonAdd--setTimebrick">+</button>
     </section>
 
     <section class="page timebrickEditor">
-    	<button class="backToTimetableEditor">Back</button>
+    	<button class="buttonBackTo buttonBackTo--TimetableEditor">Back</button>
     	<button class="previousTimebrick">Previous</button>
     	<button class="nextTimebrick">Next</button>
     	<h1>Ma Timebrick</h1>

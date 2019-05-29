@@ -1,8 +1,14 @@
 body{
 	margin: 0;
+	font-family: 'Open Sans', sans-serif;
+	--main-darkGreen: #015b3f;
+	--main-green: #01b47c;
+	--main-backgroundGray: #ededed;
+	background-color: var(--main-backgroundGray);
 }
 
 ul{
+	margin: 0;
 	padding: 0;
 }
 
@@ -10,125 +16,275 @@ li{
 	list-style: none;
 }
 
+button{
+	background: none;
+}
+
+input{
+	border: none;
+}
+
 .page{
 	display: none;
-}
-
-.buttonAdd{
-	position: fixed;
-	bottom: 30px;
-	left: 30px;
-	height: 70px;
-	width: 70px;
-	border: none;
-	font-weight: bold;
-	font-size: 45px;
-	text-align: center;
-	padding: 0;
-	border-radius: 35px;
-}
-
-.disclaimer{
-	margin: 20% auto auto auto;
-	max-width: 300px;
-	text-align: center;
-}
-
-.timetable{
-	padding: 30px;
-	max-width: 500px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	min-height: 100vh;
 	position: relative;
-	display: flex;
-	flex-direction: column;
-	margin: auto;
-}
-
-.timebrick{
-	width: 100%;
-	margin-bottom: 20px;
-	user-select: none;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-}
-
-.timebrick--size01{
-	height: 30px;
-}
-
-.timebrick--size02{
-	height: 60px;
-}
-
-.timebrick--size03{
-	height: 90px;
-}
-
-.timebrick--size04{
-	height: 120px;
-}
-
-.timebrick__interface{
-	height: 100%;
-	width: 100%;
-	background-color: white;
-	position: relative;
-	border-radius: 15px;
-	-moz-border-radius: 15px;
-	-webkit-border-radius: 15px;
-	background-color: green;
-	-webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.37);
-	-moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.37);
-	box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.37);
-}
-
-.timebrick__interface--moving{
-	/*transform: scale(1.1, 1.1);*/
-	-webkit-box-shadow: 10px 10px 22px 0px rgba(0,0,0,0.53);
-	-moz-box-shadow: 10px 10px 22px 0px rgba(0,0,0,0.53);
-	box-shadow: 10px 10px 22px 0px rgba(0,0,0,0.53);
-	pointer-events: none;
-	z-index: 500;
-}
-
-.timebrick__name{
-	pointer-events: none;
-	margin: 0;
-}
-
-.timebrick__remove{
-	position: absolute;
-	top: 5px;
-	right: 5px;
 }
 
 .title{
+	font-family: 'Nunito', sans-serif;
+	margin: 0;
 	text-align: center;
+	padding: 15px 0 15px 0;
+	font-size: 30px;
+	position: relative;
+	z-index: 500;
 }
 
-.title--timetable{
-	
+.title--white{
+	color: white;
 }
 
-.timetableSelection{
+.title--timetableSelection{
+	background-color: var(--main-darkGreen);
+}
+
+.title--timetableEditor{
+	background-color: var(--main-green);
+	border-bottom-style: solid;
+	border-color: var(--main-darkGreen);
+	border-bottom-width: 1px;
+}
+
+.buttonAdd{
+	font-family: 'Nunito', sans-serif;
+	font-size: 80px;
+	font-weight: bolder;
+	padding: 0 0 5px 1px;
+	border: none;
+	height: 80px;
+	width: 80px;
+	position: fixed;
+	bottom: 20px;
+	left: 20px;
+	border-radius: 40px 40px 40px 40px;
+	-moz-border-radius: 40px 40px 40px 40px;
+	-webkit-border-radius: 40px 40px 40px 40px;
+	color: white;
+	line-height: 0em;
+	-webkit-box-shadow: 4px 4px 11px 0px rgba(0,0,0,0.37);
+	-moz-box-shadow: 4px 4px 11px 0px rgba(0,0,0,0.37);
+	box-shadow: 4px 4px 11px 0px rgba(0,0,0,0.37);
+}
+
+.buttonAdd--createNewTimetable{
+	background-color: var(--main-darkGreen);
+}
+
+.buttonAdd--setTimebrick{
+	background-color: var(--main-green);
 }
 
 .timetable__li{
+	width: 100%;
+	max-width: 400px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	padding: 30px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	margin: auto;
+}
+
+.timetable__el{
+	position: relative;
+	width: 100%;
+	height: 250px;
+	border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	background-color: white;
+	margin-bottom: 30px;
+	overflow: hidden;
+	display: flex;
+}
+
+.timetable__dateEmplacement{
+	background-color: var(--main-green);
+	height: 100%;
+	width: 60px;
+	min-width: 60px;
+	pointer-events: none;
+	/*
+	display: flex;
+	align-items: center;
+	*/
+}
+
+.timetable__date{
+	color: white;
+	text-align: center;
+	max-width: 100%;
+	margin: 0;
+}
+
+.timetable__date__day{
+	font-size: 36px;
+	font-weight: bold;
+}
+
+.timetable__date__month{
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.timetable__condensation{
+	width: 100%;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	padding: 10px;
+	pointer-events: none;
+}
+
+.timetable__duration{
+	font-size: 20px;
+	font-weight: bold;
+	color: #494949;
+}
+
+.timetable__detail{
+	display: flex;
+	justify-content: space-between;
+	font-weight: bold;
+	color: #707070;
+	font-size: 18px;
+}
+
+.timetable__summary{
+	color: #707070;
+}
+
+.buttonRemove{
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+.timetable{
 	max-width: 500px;
+	margin: auto;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
 	padding: 30px;
 	display: flex;
 	flex-direction: column;
 }
 
-.timetable__el{
-	width: 100%;
-	height: 100px;
-	border-radius: 15px;
-	-moz-border-radius: 15px;
-	-webkit-border-radius: 15px;
-	border: solid;
-	margin-bottom: 20px;
+.timebrick{
+	position: relative;
+	margin-bottom: 15px;
+	height: 200px;
 }
+
+.timebrick__interface{
+	position: relative;
+	background-color: white;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	padding: 10px;
+	height: 100%;
+}
+
+.timebrick__interface--moving{
+	background-color: gray;
+	pointer-events: none;
+	z-index: 50;
+}
+
+.timebrick__duration{
+	font-weight: bold;
+	font-size: 24px;
+	color: #717171;
+	pointer-events: none;
+}
+
+.timebrick__name{
+	font-size: 18px;
+	color: #989898;
+	pointer-events: none;
+}
+
+.buttonBackTo{
+	position: relative;
+	z-index: 200;
+}
+
+.buttonRevealForm{
+	position: relative;
+	z-index: 200;
+}
+
+.timetable__setter{
+	-webkit-box-sizing: border-box; 
+	-moz-box-sizing: border-box;    
+	box-sizing: border-box;  
+	padding: 0px 30px 0 30px;
+	width: 100%;
+	min-height: 100vh;
+	background-color: var(--main-green);
+	position: absolute;
+	top: 0px;
+	z-index: 100;
+}
+
+.timetable__setter--hidden{
+	transform: translateY(-100%);
+}
+
+.timetable__form{ 
+	margin: auto;
+	max-width: 400px;
+	padding-top: 120px;
+}
+
+.timetable__form label{
+	font-weight: bold;
+	font-size: 24px;
+	color: white;
+}
+
+.timetable__parameter{
+	margin: auto;
+	width: 100%;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 20px;
+}
+
+.timetable__parameter--duration--min{
+	margin-right: 30px;
+}
+
+.timetable__parameterContainer{
+	display: flex;
+	justify-content: space-between;
+}
+
+.timetable__parameterContainer--age{
+	flex-wrap: wrap;
+}
+
+
+
 
 body[data-page="timetableSelection"] .timetableSelection{
 	display: block;
@@ -140,8 +296,4 @@ body[data-page="timetableEditor"] .timetableEditor{
 
 body[data-page="timebrickEditor"] .timebrickEditor{
 	display: block;
-}
-
-.timetableSelection[data-isempty='no'] .disclaimer{
-	display: none;
 }

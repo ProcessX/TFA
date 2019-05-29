@@ -4,7 +4,7 @@ const timebrickForm_name = document.querySelector('.timebrickForm__name');
 const timebrickForm_description = document.querySelector('.timebrickForm__description');
 const timebrickForm_duration = document.querySelector('.timebrickForm__duration');
 
-const button_backToTimetableEditor = document.querySelector('.backToTimetableEditor');
+const button_backToTimetableEditor = document.querySelector('.buttonBackTo--TimetableEditor');
 const button_addTimebrick = document.querySelector('.addTimebrick');
 const button_nextTimebrick = document.querySelector('.nextTimebrick');
 const button_previousTimebrick = document.querySelector('.previousTimebrick');
@@ -69,7 +69,6 @@ function setTimebrickEditor(timebrickData){
 	}
 
 	if(currentTimebrickData.duration != null){
-		console.log(currentTimebrickData);
 		timebrickForm_duration.value = parseInt(timebrickData.duration);
 	}
 }
