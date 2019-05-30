@@ -11,20 +11,54 @@
 </head>
 <body data-page="timetableSelection">
 
+	<section class="page timetableSelection" data-isempty='yes' data-new='no'>
+		<div class="alert alert--timetableSelection alert--hidden">
+			<div class="alert__background"></div>
+			<div class="alert__content">
+				<p class="alert__message">Voulez-vous supprimer l'activité <span class="alert__message__addOn"></span>?</p>
+				<button class="buttonCancel buttonCancel--timetableSelection">Annuler</button>
+				<button class="buttonConfirm buttonConfirm--timetableSelection">Supprimer</button>
+			</div>
+		</div>
 
-	<section class="page timetableSelection" data-isempty='yes'>
     	<h1 class="title title--timetableSelection title--white">Mes animations</h1>
-    	<!--
-        <p class="disclaimer">Appuyer sur le "+" pour ajouter une nouvelle journée d'animation.</p>
-        -->
+    	
+        <p class="disclaimer">Appuyer sur le "<strong>+</strong>" pour ajouter une nouvelle animation.</p>
+        
     	<ul class="timetable__li"></ul>
     	<button class="buttonAdd buttonAdd--createNewTimetable">+</button>
     </section>
 
-    <section class="page timetableEditor">
-    	<button class="buttonBackTo buttonBackTo--TimetableSelection">Back</button>
-    	<button class="buttonRevealForm">Reveal</button>
+    <section class="page timetableEditor" data-isempty='yes'>
+
+    	<div class="alert alert--removingTimebrick alert--hidden">
+			<div class="alert__background"></div>
+			<div class="alert__content">
+				<p class="alert__message">Voulez-vous supprimer l'activité <span class="alert__message__addOn"></span>?</p>
+				<button class="buttonCancel buttonCancel--removingTimebrick">Annuler</button>
+				<button class="buttonConfirm buttonConfirm--removingTimebrick">Supprimer</button>
+			</div>
+		</div>
+
+		<div class="alert alert--quitTimetableEditorPage alert--hidden">
+			<div class="alert__background"></div>
+			<div class="alert__content">
+				<p class="alert__message">Voulez-vous quitter la page ?</p>
+				<p class="alert__message">Votre animation est vide. Si vous quittez, elle ne sera pas sauvegardée.</p>
+				<button class="buttonCancel buttonCancel--quitTimetableEditorPage">Annuler</button>
+				<button class="buttonConfirm buttonConfirm--quitTimetableEditorPage">Quitter</button>
+			</div>
+		</div>
+
+    	<button class="buttonNavigation buttonNavigation--backTo buttonNavigation--backTo--TimetableSelection">
+    		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M491.3 235.3H20.7C9.3 235.3 0 244.6 0 256c0 11.4 9.3 20.7 20.7 20.7h470.6c11.4 0 20.7-9.3 20.7-20.7C512 244.6 502.7 235.3 491.3 235.3z"/><path d="M49.9 256L211.8 94.1c8.1-8.1 8.1-21.2 0-29.2 -8.1-8.1-21.2-8.1-29.2 0L6.1 241.4c-8.1 8.1-8.1 21.2 0 29.2l176.5 176.5c4 4 9.3 6.1 14.6 6.1 5.3 0 10.6-2 14.6-6.1 8.1-8.1 8.1-21.2 0-29.2L49.9 256z"/></svg>
+    	</button>
+    	<button class="buttonNavigation buttonNavigation--revealForm">
+    		<svg xmlns="http://www.w3.org/2000/svg" height="512" viewBox="0 0 512 512" width="512"><path d="m512 492c0 11-9 20-20 20h-236c-11 0-20-9-20-20s9-20 20-20h236c11 0 20 9 20 20zm-20-98.7h-157.3c-11 0-20 9-20 20 0 11 9 20 20 20h157.3c11 0 20-9 20-20 0-11-9-20-20-20zm0-78.7h-78.7c-11 0-20 9-20 20s9 20 20 20h78.7c11 0 20-9 20-20s-9-20-20-20zm14.1-162.5-354 354c-3.7 3.8-8.8 5.9-14.1 5.9h-118c-11 0-20-9-20-20v-118c0-5.3 2.1-10.4 5.9-14.1l354-354c7.8-7.8 20.5-7.8 28.3 0l118 118c7.8 7.8 7.8 20.5 0 28.3zm-42.4-14.1-89.7-89.7-334 334v89.7h89.7zm0 0"/></svg>
+    	</button>
     	<h1 class="title title--timetableEditor title--white">Ma timetable</h1>
+
+    	<p class="disclaimer">Appuyer sur le "<strong>+</strong>" pour ajouter une nouvelle activité.</p>
     	
     	<div class="timetable__setter timetable__setter--hidden">
     		<form class="timetable__form">
@@ -53,7 +87,7 @@
     			<label for="timetableSummary">Résumé</label>
     			<input type="text" name="timetableSummary" id="timetableSummary" class="timetable__parameter timetable__parameter--summary" placeholder="Résumé de l'animation.">
 
-    			<input class="buttonValidateForm" type="submit" name="timetable__parameter__validate" value="Valider">
+    			<input class="buttonValidateForm buttonValidateForm--timetable" type="submit" name="timetable__parameter__validate" value="Valider">
     		</form>
     	</div>
     
@@ -64,30 +98,22 @@
     </section>
 
     <section class="page timebrickEditor" data-new='no'>
-    	<button class="buttonBackTo buttonBackTo--TimetableEditor">Back</button>
+    	<div class="alert alert--quitTimebrickEditorPage alert--hidden">
+			<div class="alert__background"></div>
+			<div class="alert__content">
+				<p class="alert__message">Voulez-vous revenir à votre animation ?</p>
+				<p class="alert__message">Vous n'avez pas sauvegarder la nouvelle activité. Si vous quittez, elle sera perdue.</p>
+				<button class="buttonCancel buttonCancel--quitTimebrickEditorPage">Annuler</button>
+				<button class="buttonConfirm buttonConfirm--quitTimebrickEditorPage">Quitter</button>
+			</div>
+		</div>
+    	<button class="buttonNavigation buttonNavigation--backTo buttonNavigation--backTo--TimetableEditor">
+    		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M491.3 235.3H20.7C9.3 235.3 0 244.6 0 256c0 11.4 9.3 20.7 20.7 20.7h470.6c11.4 0 20.7-9.3 20.7-20.7C512 244.6 502.7 235.3 491.3 235.3z"/><path d="M49.9 256L211.8 94.1c8.1-8.1 8.1-21.2 0-29.2 -8.1-8.1-21.2-8.1-29.2 0L6.1 241.4c-8.1 8.1-8.1 21.2 0 29.2l176.5 176.5c4 4 9.3 6.1 14.6 6.1 5.3 0 10.6-2 14.6-6.1 8.1-8.1 8.1-21.2 0-29.2L49.9 256z"/></svg>
+    	</button>
     	<h1 class="title title--timebrickEditor">Ma Timebrick</h1>
-    	<button class="previousTimebrick">Previous</button>
-    	<button class="nextTimebrick">Next</button>
-    	<!--
-    	<form class="timebrick__form timebrick__form--01">
-    		<label for="name">Nom</label>
-    		<input class="timebrick__parameter timebrick__parameter--name timebrick__parameter--name--01" type="text" name="timebrickName" value="Name" id="name" placeholder="Mon activité">
+    	<button class="buttonNavThroughTimebricks buttonNavThroughTimebricks--previous">Previous</button>
+    	<button class="buttonNavThroughTimebricks buttonNavThroughTimebricks--next">Next</button>
 
-    		<label for="duration">Durée</label>
-    		<input type="range" name="duration" class="timebrick__parameter timebrick__parameter--duration timebrick__parameter--duration--01" id="duration">
-
-    		<label for="description">Description</label>
-    		<input class="timebrick__parameter timebrick__parameter--description timebrick__parameter--description--01" type="text" name="timebrickDescription" value="Description" id="description" placeholder="Description">
-
-    		<div>
-    			<label>Matériel</label>
-    			<ul class="equipment__li equipment__li--01"></ul>
-    			<button class="addEquipment addEquipment--01">+</button>
-    		</div>
-
-    		<input class="addTimebrick addTimebrick--01" type="submit" name="timebrickSubmit">
-    	</form>
-    -->
     	<div class="timebrick__setter">
     		<div class="timebrick__formContainer timebrick__formContainer--01 timebrick__formContainer--current">
     			<form class="timebrick__form timebrick__form--01">
@@ -106,7 +132,7 @@
 		    			<button class="addEquipment addEquipment--01">+</button>
 		    		</div>
 
-		    		<input class="buttonAddTimebrick buttonAddTimebrick--01" type="submit" name="timebrickSubmit">
+		    		<input class="buttonValidateForm buttonValidateForm--timebrick buttonValidateForm--timebrick--01" type="submit" name="timebrickSubmit">
 		    	</form>
     		</div>
     		
@@ -127,7 +153,7 @@
 		    			<button class="addEquipment addEquipment--02">+</button>
 		    		</div>
 
-		    		<input class="buttonAddTimebrick buttonAddTimebrick--02" type="submit" name="timebrickSubmit">
+		    		<input class="buttonValidateForm buttonValidateForm--timebrick buttonValidateForm--timebrick--02" type="submit" name="timebrickSubmit">
 		    	</form>
     		</div>
     	

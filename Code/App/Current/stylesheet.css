@@ -33,6 +33,48 @@ input{
 	position: relative;
 }
 
+.alert{
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	height: 100vh;
+	width: 100vw;
+	padding: 0 50px 0 50px;
+	position: fixed;
+	z-index: 1000;
+	display: flex;
+	text-align: center;
+}
+
+.alert--hidden{
+	visibility: hidden;
+	pointer-events: none;
+}
+
+.alert__background{
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: black;
+	opacity: 0.5;
+}
+
+.alert__content{
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	max-width: 500px;
+	height: 400px;
+	padding: 15px;
+	margin: auto;
+	display: block;
+	background-color: white;
+	position: relative;
+	z-index: 10;
+}
+
 .timebrickEditor{
 	max-width: 100vh;
 	overflow-x: hidden;
@@ -45,7 +87,7 @@ input{
 	padding: 15px 0 15px 0;
 	font-size: 30px;
 	position: relative;
-	z-index: 500;
+	z-index: 200;
 }
 
 .title--white{
@@ -235,14 +277,33 @@ input{
 	pointer-events: none;
 }
 
-.buttonBackTo{
-	position: relative;
-	z-index: 200;
+.buttonNavigation{
+	position: absolute;
+	top: 10px;
+	z-index: 300;
+	height: 50px;
+	width: 50px;
+	border: none;
 }
 
-.buttonRevealForm{
-	position: relative;
-	z-index: 200;
+.buttonNavigation svg{
+	height: 100%;
+	width: 100%;
+}
+
+.buttonNavigation--backTo{
+	left: 10px;
+}
+
+.buttonNavigation--revealForm{
+	right: 10px;
+	transition-duration: 1s;
+}
+
+.buttonRevealForm svg{
+	height: 100%;
+	width: 100%;
+	fill: #FFF;
 }
 
 .timetable__setter{
@@ -256,6 +317,7 @@ input{
 	position: absolute;
 	top: 0px;
 	z-index: 100;
+	transition-duration: 1s;
 }
 
 .timetable__setter--hidden{
@@ -359,39 +421,17 @@ input{
 	background-color: blue;
 }
 
-/*
-.timebrick__form{
-	margin: auto;
-	max-width: 400px;
-	padding: 30px;
-	
-	transition-duration: 2s;
-
-	opacity: 1;
+.disclaimer{
+	margin: 200px auto 0 auto;
+	max-width: 300px;
+	text-align: center;
+	display: none;
 }
 
-.timebrick__form--next{
-
+.buttonValidateForm{
+	visibility: hidden;
+	pointer-events: none;
 }
-
-.timebrick__form--previous{
-
-}
-
-.timebrick__form label{
-	font-weight: bold;
-	font-size: 24px;
-	color: var(--main-green);
-}
-
-.timebrick__parameter{
-	margin: auto;
-	width: 100%;
-	font-family: 'Open Sans', sans-serif;
-	font-size: 20px;
-}
-
-*/
 
 body[data-page="timetableSelection"] .timetableSelection{
 	display: block;
@@ -403,4 +443,31 @@ body[data-page="timetableEditor"] .timetableEditor{
 
 body[data-page="timebrickEditor"] .timebrickEditor{
 	display: block;
+}
+
+.page[data-isempty='yes'] .disclaimer{
+	display: block;
+}
+
+.page[data-isempty='yes'] .buttonNavThroughTimebricks{
+	pointer-events: none;
+}
+
+.timetableEditor[data-new="yes"] .buttonNavigation--revealForm{
+	opacity: 0;
+	pointer-events: none;
+}
+
+.timetableEditor[data-new="yes"] .buttonValidateForm--timetable{
+	visibility: visible;
+	pointer-events: all;
+}
+
+.timebrickEditor[data-new="yes"] .buttonValidateForm{
+	visibility: visible;
+	pointer-events: all;
+}
+
+.timebrickEditor[data-new="yes"] .buttonNavThroughTimebricks{
+	pointer-events: none;
 }

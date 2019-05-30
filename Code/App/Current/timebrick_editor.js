@@ -11,16 +11,21 @@ const timebrickParameter_name02 = document.querySelector('.timebrick__parameter-
 const timebrickParameter_description02 = document.querySelector('.timebrick__parameter--description--02');
 const timebrickParameter_duration02 = document.querySelector('.timebrick__parameter--duration--02');
 
-const button_backToTimetableEditor = document.querySelector('.buttonBackTo--TimetableEditor');
-const button_addTimebrick01 = document.querySelector('.buttonAddTimebrick--01');
-const button_addTimebrick02 = document.querySelector('.buttonAddTimebrick--02');
-const button_nextTimebrick = document.querySelector('.nextTimebrick');
-const button_previousTimebrick = document.querySelector('.previousTimebrick');
+const button_backToTimetableEditor = document.querySelector('.buttonNavigation--backTo--TimetableEditor');
+const button_addTimebrick01 = document.querySelector('.buttonValidateForm--timebrick--01');
+const button_addTimebrick02 = document.querySelector('.buttonValidateForm--timebrick--02');
+const button_nextTimebrick = document.querySelector('.buttonNavThroughTimebricks--next');
+const button_previousTimebrick = document.querySelector('.buttonNavThroughTimebricks--previous');
 const button_addEquipment01 = document.querySelector('.addEquipment--01');
 const button_addEquipment02 = document.querySelector('.addEquipment--02');
 
+const button_confirmQuitTimebrickEditor = document.querySelector('.buttonConfirm--quitTimebrickEditorPage');
+const button_cancelQuitTimebrickEditor = document.querySelector('.buttonCancel--quitTimebrickEditorPage');
+
 const equipmentList01 = document.querySelector('.equipment__li--01');
 const equipmentList02 = document.querySelector('.equipment__li--02');
+
+const alertQuitTimebrickEditor = document.querySelector('.alert--quitTimebrickEditorPage');
 
 
 
@@ -52,7 +57,12 @@ button_backToTimetableEditor.addEventListener('click', (e) => {
 		saveTimebrick();
 	}
 	*/
-	document.body.setAttribute('data-page', 'timetableEditor');
+	if(timebrickEditor.getAttribute('data-new') === 'yes'){
+		alertQuitTimebrickEditor.classList.toggle('alert--hidden');
+	}
+	else{
+		document.body.setAttribute('data-page', 'timetableEditor');
+	}
 });
 
 button_addTimebrick01.addEventListener('click', (e) => {
@@ -96,7 +106,17 @@ button_nextTimebrick.addEventListener('click', (e) => {
 button_addEquipment01.addEventListener('click', (e) => {
 	e.preventDefault();
 	addEquipmentToList('');
-})
+});
+
+button_confirmQuitTimebrickEditor.addEventListener('click', (e) => {
+	timebrickEditor.setAttribute('data-new', 'no');
+	alertQuitTimebrickEditor.classList.toggle('alert--hidden');
+	document.body.setAttribute('data-page', 'timetableEditor');
+});
+
+button_cancelQuitTimebrickEditor.addEventListener('click', (e) => {
+	alertQuitTimebrickEditor.classList.toggle('alert--hidden');
+});
 
 
 
@@ -124,6 +144,11 @@ function saveTimebrick(){
 	currentTimebrickData.name = currentTimebrickParameter_name.value;
 	currentTimebrickData.description = currentTimebrickParameter_description.value;
 	currentTimebrickData.duration = currentTimebrickParameter_duration.value;
+	console.log('SAVE TIMEBRICK');
+	for(let i = 0; i < currentEquipmentList.childNodes.lenght; i++){
+		currentTimebrickData.equipment = currentEquipmentList.childNodes[i].childNodes[0].value;
+		console.log(currentEquipmentList.childNodes[i].childNodes[0].value);
+	}
 
 	if(currentTimebrickData.order < timebrickCounter){
 		currentTimetableData.content[currentTimebrickData.order] = currentTimebrickData;

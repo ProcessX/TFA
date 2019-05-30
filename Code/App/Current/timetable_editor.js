@@ -5,11 +5,17 @@ const timetableEditor = document.querySelector(".timetableEditor");
 const timetableSetter = document.querySelector('.timetable__setter');
 const timetableParameterAgeDisplay = document.querySelector('.timetable__parameter__age__display');
 const timebrickEditor = document.querySelector('.timebrickEditor');
+const alertRemoveTimebrick = document.querySelector('.alert--removingTimebrick');
+const alertQuitPage = document.querySelector('.alert--quitTimetableEditorPage');
 
-const button_backToTimetableSelection = document.querySelector(".buttonBackTo--TimetableSelection");
+const button_backToTimetableSelection = document.querySelector(".buttonNavigation--backTo--TimetableSelection");
 const button_setTimebrick = document.querySelector(".buttonAdd--setTimebrick");
-const button_revealForm = document.querySelector('.buttonRevealForm');
+const button_revealForm = document.querySelector('.buttonNavigation--revealForm');
 const button_validateForm = document.querySelector('.buttonValidateForm');
+const button_confirmRemoveTimebrick = document.querySelector('.buttonConfirm--removingTimebrick');
+const button_cancelRemoveTimebrick = document.querySelector('.buttonCancel--removingTimebrick');
+const button_confirmQuitPage = document.querySelector('.buttonConfirm--quitTimetableEditorPage');
+const button_cancelQuitPage = document.querySelector('.buttonCancel--quitTimetableEditorPage');
 
 const timetableParameter_date = document.querySelector('.timetable__parameter--date');
 const timetableParameter_durationMin = document.querySelector('.timetable__parameter--duration--min');
@@ -23,13 +29,13 @@ const timetableParameter_summary = document.querySelector('.timetable__parameter
 const timetableData_base = {
 	id : 0,
 	title : "title",
-	date : "date",
+	date : '',
 	ageMin : 4,
 	ageMax : 18,
 	startTime : '08:30',
 	endTime : '23:00',
-	theme : 'theme',
-	summary : 'summary',
+	theme : '',
+	summary : '',
 	content : []
 }
 
@@ -67,6 +73,8 @@ var mouseOffsetYCorrection;
 
 var timebrickListDOM = [];
 
+var timebrickToRemove;
+
 
 
 
@@ -74,17 +82,22 @@ var timebrickListDOM = [];
 
 /*---------------------------INIT-------------------------------------------------------------------------*/
 button_backToTimetableSelection.addEventListener("click", (e) => {
-	if(currentTimetableData.content.length >= 1)
+	if(currentTimetableData.content.length >= 1){
 		saveTimetable();
-	timetableSetter.classList.add('timetable__setter--hidden');
-	document.body.setAttribute("data-page", "timetableSelection");
-	timebrickEditor.setAttribute('data-new', 'yes');
+		timetableSetter.classList.add('timetable__setter--hidden');
+		document.body.setAttribute("data-page", "timetableSelection");
+		timebrickEditor.setAttribute('data-new', 'yes');
+	}
+	else{
+		alertQuitPage.classList.toggle('alert--hidden');
+	}
 });
 
 button_setTimebrick.addEventListener("click", (e) => {
 	let newTimebrickData = Object.create(timebrickData_base);
 	newTimebrickData.order = timebrickCounter;
 	setTimebrickEditor(newTimebrickData);
+	timebrickEditor.setAttribute('data-new', 'yes');
 	document.body.setAttribute('data-page', 'timebrickEditor');
 });
 
@@ -102,6 +115,7 @@ button_validateForm.addEventListener('click', (e) => {
 	currentTimetableData.theme = timetableParameter_theme.value;
 	currentTimetableData.summary = timetableParameter_summary.value;
 	timetableSetter.classList.toggle('timetable__setter--hidden');
+	timetableEditor.setAttribute('data-new', 'no');
 });
 
 timetableParameter_ageMin.addEventListener('input', checkAgeParameter);
@@ -109,6 +123,33 @@ timetableParameter_ageMax.addEventListener('input', checkAgeParameter);
 timetableParameter_date.addEventListener('input', (e) => {
 	setTimetableTitle(timetableParameter_date.value);
 })
+
+button_confirmRemoveTimebrick.addEventListener('click', (e) => {
+	removeTimebrick();
+	alertRemoveTimebrick.classList.toggle('alert--hidden');
+});
+
+button_cancelRemoveTimebrick.addEventListener('click', (e) => {
+	alertRemoveTimebrick.classList.toggle('alert--hidden');
+});
+
+button_confirmQuitPage.addEventListener('click', (e) => {
+	timetableListDOM.forEach((elem) => {
+		if(parseInt(elem.getAttribute('data-timetable-id')) === currentTimetableData.id){
+			timetableToRemove = elem;
+			removeTimetableFromList();
+		}
+	});
+
+	timetableSetter.classList.add('timetable__setter--hidden');
+	document.body.setAttribute("data-page", "timetableSelection");
+	timebrickEditor.setAttribute('data-new', 'yes');
+	alertQuitPage.classList.toggle('alert--hidden');
+});
+
+button_cancelQuitPage.addEventListener('click', (e) => {
+	alertQuitPage.classList.toggle('alert--hidden');
+});
 
 setBrickDisplacementSystem();
 
@@ -143,7 +184,6 @@ function setTimetable(timetableData){
 
 
 function setTimetableForm(){
-	console.log(currentTimetableData.date);
 	if(currentTimetableData.date != 'date')
 		timetableParameter_date.value = currentTimetableData.date;
 	else
@@ -161,8 +201,6 @@ function setTimetableForm(){
 
 //Enregistre la Timetable dans le local storage.
 function saveTimetable(){
-	console.log("Save timetable");
-
 	currentTimetableData.date = timetableParameter_date.value;
 	currentTimetableData.startTime = timetableParameter_durationMin.value;
 	currentTimetableData.endTime = timetableParameter_durationMax.value;
@@ -228,7 +266,8 @@ function addTimebrick(timebrickData){
 	button_removeTimebrick.innerHTML = 'X';
 	button_removeTimebrick.classList.add('buttonRemove');
 	button_removeTimebrick.addEventListener('click', (e) => {
-		removeTimebrick(newTimebrick);
+		alertRemoveTimebrick.classList.toggle('alert--hidden');
+		timebrickToRemove = newTimebrick;
 	});
 	newTimebrick__interface.appendChild(button_removeTimebrick);
 
@@ -239,11 +278,13 @@ function addTimebrick(timebrickData){
 	timebrickListDOM.push(newTimebrick);
 
 	timebrickCounter += 1;
+
+	document.querySelector('.timetableEditor').setAttribute('data-isempty', 'no');
 }
 
 
 //Retire la brique désirée du DOM et de la mémoire.
-function removeTimebrick(timebrickToRemove){
+function removeTimebrick(){
 	timetable.removeChild(timebrickToRemove);
 	let timebrickToRemoveIndex = timebrickToRemove.style.order;
 	currentTimetableData.content.splice(timebrickToRemoveIndex, 1);
@@ -255,6 +296,9 @@ function removeTimebrick(timebrickToRemove){
 		timebrickListDOM[i].style.order = i;
 	}
 	saveTimetable();
+
+	if(timebrickListDOM.length < 1);
+		document.querySelector('.timetableEditor').setAttribute('data-isempty', 'yes');
 }
 
 
@@ -433,9 +477,15 @@ function checkAgeParameter(){
 }
 
 function setTimetableTitle(timetableDate){
-	let timetableYear = timetableDate.slice(0,4);
-	let timetableMonth = timetableDate.slice(5,7);
-	let timetableDay = timetableDate.slice(8,10);
 
-	timetableTitle.innerHTML = timetableDay + '/' + timetableMonth + '/' + timetableYear;
+	if(timetableDate.length < 6){
+		timetableTitle.innerHTML = 'Mon animation'
+	}
+	else{
+		let timetableYear = timetableDate.slice(0,4);
+		let timetableMonth = timetableDate.slice(5,7);
+		let timetableDay = timetableDate.slice(8,10);
+
+		timetableTitle.innerHTML = timetableDay + '/' + timetableMonth + '/' + timetableYear;
+	}
 }

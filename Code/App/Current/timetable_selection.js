@@ -1,11 +1,16 @@
 /*---------------------------CONST-------------------------------------------------------------------------*/
 const timetableList = document.querySelector(".timetable__li");
+const alertRemovingTimetable = document.querySelector('.alert--timetableSelection');
 
 const button_createNewTimetable = document.querySelector(".buttonAdd--createNewTimetable");
+const button_cancelRemoving = document.querySelector('.buttonCancel--timetableSelection');
+const button_confirmRemoving = document.querySelector('.buttonConfirm--timetableSelection');
 
 const localStorage_timetableList = "timetableList";
 
 const monthAbbreviation = ['JAN', 'FEV', 'MAR', 'AVR', 'MAI', 'JUN', 'JUL', 'AOU', 'SEP', 'OCT', 'NOV', 'DEC'];
+
+const alertBackgroundList = document.getElementsByClassName('alert__background');
 
 
 
@@ -13,6 +18,7 @@ const monthAbbreviation = ['JAN', 'FEV', 'MAR', 'AVR', 'MAI', 'JUN', 'JUL', 'AOU
 
 var timetableCounter;
 var timetableListDOM = [];
+var timetableToRemove;
 
 
 
@@ -28,6 +34,22 @@ button_createNewTimetable.addEventListener("click", (e) => {
 	timetableSetter.classList.remove('timetable__setter--hidden');
 	console.log(timetableSetter.classList);
 	document.body.setAttribute("data-page", "timetableEditor");
+	timetableEditor.setAttribute('data-new', 'yes');
+});
+
+for(let i = 0; i < alertBackgroundList.length; i++){
+	alertBackgroundList[i].addEventListener('click', (e) =>{
+		e.target.parentNode.classList.toggle('alert--hidden');
+	});
+}
+
+button_cancelRemoving.addEventListener('click', (e) => {
+	alertRemovingTimetable.classList.toggle('alert--hidden');
+});
+
+button_confirmRemoving.addEventListener('click', (e) => {
+	alertRemovingTimetable.classList.toggle('alert--hidden');
+	removeTimetableFromList();
 });
 
 setTimetableList();
@@ -75,10 +97,14 @@ function addTimetableToList(timetableData){
 
 	let newTimetable__date = document.createElement('p');
 	newTimetable__date.classList.add('timetable__date');
-	let timetableYear = timetableData.date.slice(0,4);
-	let timetableMonth = monthAbbreviation[parseInt(timetableData.date.slice(5,7)) - 1];
-	let timetableDay = timetableData.date.slice(8,10);
-	newTimetable__date.innerHTML = `<span class='timetable__date__day'>${timetableDay} </span><span class='timetable__date__month'>${timetableMonth} </span>${timetableYear}`;
+	let d = '';
+	if(timetableData.date.length > 8){
+		let timetableYear = timetableData.date.slice(0,4);
+		let timetableMonth = monthAbbreviation[parseInt(timetableData.date.slice(5,7)) - 1];
+		let timetableDay = timetableData.date.slice(8,10);
+		d = `<span class='timetable__date__day'>${timetableDay} </span><span class='timetable__date__month'>${timetableMonth} </span>${timetableYear}`;
+	}
+	newTimetable__date.innerHTML = d;
 
 	newTimetable__dateEmplacement.appendChild(newTimetable__date);	
 	newTimetable.appendChild(newTimetable__dateEmplacement);
@@ -119,18 +145,21 @@ function addTimetableToList(timetableData){
 	button_removeTimetable.classList.add('buttonRemove', 'buttonRemove--timetable')
 	button_removeTimetable.addEventListener("click", (e) => {
 		e.stopPropagation();
-		removeTimetableFromList(newTimetable);
+		timetableToRemove = newTimetable;
+		alertRemovingTimetable.classList.toggle('alert--hidden');
 	});
 	newTimetable.appendChild(button_removeTimetable);
 
 	timetableList.appendChild(newTimetable);
 
 	timetableListDOM.push(newTimetable);
+
+	document.querySelector('.timetableSelection').setAttribute('data-isempty', 'no');
 }
 
 
 //Retire une Timetable du DOM et de la mémoire, correspondante aux données passées en paramètre.
-function removeTimetableFromList(timetableToRemove){
+function removeTimetableFromList(){
 	timetableList.removeChild(timetableToRemove);
 	let timetableToRemoveId = timetableToRemove.getAttribute("data-timetable-id");
 	let timetableListInMemory = JSON.parse(localStorage.getItem(localStorage_timetableList));
@@ -142,6 +171,10 @@ function removeTimetableFromList(timetableToRemove){
 	timetableListDOM = timetableListDOM.filter((e) =>{
 		return e != timetableToRemove;
 	})
+
+	if(timetableListDOM.length < 1){
+		document.querySelector('.timetableSelection').setAttribute('data-isempty', 'yes');
+	}
 }
 
 
@@ -157,7 +190,6 @@ function getTimetableById(id){
 
 
 function updateTimetable(timetableData){
-	console.log(timetableData);
 	let timetableYear = timetableData.date.slice(0,4);
 	let timetableMonth = monthAbbreviation[parseInt(timetableData.date.slice(5,7)) - 1];
 	let timetableDay = timetableData.date.slice(8,10);
@@ -172,7 +204,11 @@ function updateTimetable(timetableData){
 				if(child.classList.contains('timetable__dateEmplacement')){
 					timetableGrandchild.forEach((grandchild) => {
 						if(grandchild.classList.contains('timetable__date')){
-							grandchild.innerHTML = `<span class='timetable__date__day'>${timetableDay} </span><span class='timetable__date__month'>${timetableMonth} </span>${timetableYear}`;
+							let d = '';
+							if(timetableData.date.length > 8){
+								d = `<span class='timetable__date__day'>${timetableDay} </span><span class='timetable__date__month'>${timetableMonth} </span>${timetableYear}`;
+							}
+							grandchild.innerHTML = d;
 						}
 					});
 				}
