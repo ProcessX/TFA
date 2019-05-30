@@ -4,6 +4,7 @@ const timetable = document.querySelector(".timetable");
 const timetableEditor = document.querySelector(".timetableEditor");
 const timetableSetter = document.querySelector('.timetable__setter');
 const timetableParameterAgeDisplay = document.querySelector('.timetable__parameter__age__display');
+const timebrickEditor = document.querySelector('.timebrickEditor');
 
 const button_backToTimetableSelection = document.querySelector(".buttonBackTo--TimetableSelection");
 const button_setTimebrick = document.querySelector(".buttonAdd--setTimebrick");
@@ -37,6 +38,7 @@ const timebrickData_base = {
 	class: 'class',
 	description: 'description',
 	duration: 5,
+	equipment: [],
 	order: 0
 }
 
@@ -72,10 +74,11 @@ var timebrickListDOM = [];
 
 /*---------------------------INIT-------------------------------------------------------------------------*/
 button_backToTimetableSelection.addEventListener("click", (e) => {
-	console.log('tr');
 	if(currentTimetableData.content.length >= 1)
-		saveTimetable(currentTimetableData);
+		saveTimetable();
+	timetableSetter.classList.add('timetable__setter--hidden');
 	document.body.setAttribute("data-page", "timetableSelection");
+	timebrickEditor.setAttribute('data-new', 'yes');
 });
 
 button_setTimebrick.addEventListener("click", (e) => {
@@ -103,6 +106,9 @@ button_validateForm.addEventListener('click', (e) => {
 
 timetableParameter_ageMin.addEventListener('input', checkAgeParameter);
 timetableParameter_ageMax.addEventListener('input', checkAgeParameter);
+timetableParameter_date.addEventListener('input', (e) => {
+	setTimetableTitle(timetableParameter_date.value);
+})
 
 setBrickDisplacementSystem();
 
@@ -116,8 +122,19 @@ setBrickDisplacementSystem();
 function setTimetable(timetableData){
 	timebrickCounter = 0;
 	timetable.innerHTML = "";
-	timetableTitle.innerHTML = timetableData.title;
+	//timetableTitle.innerHTML = timetableData.title;
+	setTimetableTitle(timetableData.date);
 	currentTimetableData.id = timetableData.id;
+	currentTimetableData.date = timetableData.date;
+	currentTimetableData.startTime = timetableData.startTime;
+	currentTimetableData.endTime = timetableData.endTime;
+	currentTimetableData.ageMin = timetableData.ageMin;
+	currentTimetableData.ageMax = timetableData.ageMax;
+	currentTimetableData.theme = timetableData.theme;
+	currentTimetableData.summary = timetableData.summary;
+
+	setTimetableForm();
+
 	currentTimetableData.content = [];
 	for(let i = 0; i < timetableData.content.length; i++){
 		addTimebrick(timetableData.content[i]);
@@ -125,27 +142,46 @@ function setTimetable(timetableData){
 }
 
 
-function setTimetableForm(timetableData){
+function setTimetableForm(){
+	console.log(currentTimetableData.date);
+	if(currentTimetableData.date != 'date')
+		timetableParameter_date.value = currentTimetableData.date;
+	else
+		timetableParameter_date.value = '';
 
+	timetableParameter_durationMin.value = currentTimetableData.startTime;
+	timetableParameter_durationMax.value = currentTimetableData.endTime;
+	timetableParameter_ageMin.value = currentTimetableData.ageMin;
+	timetableParameter_ageMax.value = currentTimetableData.ageMax;
+	timetableParameterAgeDisplay.innerHTML = currentTimetableData.ageMin + '-' + currentTimetableData.ageMax + ' ans';
+	timetableParameter_theme.value = currentTimetableData.theme;
+	timetableParameter_summary.value = currentTimetableData.summary;
 }
 
 
 //Enregistre la Timetable dans le local storage.
-function saveTimetable(timetableData){
+function saveTimetable(){
 	console.log("Save timetable");
-	timetableData.title = timetableTitle.innerHTML;
-	let currentDate = new Date();
-	timetableData.date = currentDate.getDate() + "-" + currentDate.getMonth() + "-" + currentDate.getFullYear();
+
+	currentTimetableData.date = timetableParameter_date.value;
+	currentTimetableData.startTime = timetableParameter_durationMin.value;
+	currentTimetableData.endTime = timetableParameter_durationMax.value;
+	currentTimetableData.ageMin = timetableParameter_ageMin.value;
+	currentTimetableData.ageMax = timetableParameter_ageMax.value;
+	currentTimetableData.theme = timetableParameter_theme.value;
+	currentTimetableData.summary = timetableParameter_summary.value;
+
 	let timetableListInMemory = JSON.parse(localStorage.getItem(localStorage_timetableList));
 	let timetableIndexIfAlreadySaved = timetableListInMemory.findIndex((e) => {
-		return timetableData.id === e.id;
+		return currentTimetableData.id === e.id;
 	});
 	if(timetableIndexIfAlreadySaved === -1){
-		timetableListInMemory.push(timetableData);
+		timetableListInMemory.push(currentTimetableData);
 		addTimetableToList(currentTimetableData);
 	}
 	else{
-		timetableListInMemory[timetableIndexIfAlreadySaved] = timetableData;
+		updateTimetable(currentTimetableData);
+		timetableListInMemory[timetableIndexIfAlreadySaved] = currentTimetableData;
 	}
 	localStorage.setItem(localStorage_timetableList, JSON.stringify(timetableListInMemory));
 }
@@ -167,7 +203,7 @@ function addTimebrick(timebrickData){
 		if(isMoving){
 			getNewOffsetY(e.target.parentNode);
 			changeOrderWith(e.target.parentNode);
-			saveTimetable(currentTimetableData);
+			saveTimetable();
 		}
 	});
 	newTimebrick__interface.addEventListener('touchstart', (e) => {
@@ -218,7 +254,7 @@ function removeTimebrick(timebrickToRemove){
 		currentTimetableData.content[i].order = i;
 		timebrickListDOM[i].style.order = i;
 	}
-	saveTimetable(currentTimetableData);
+	saveTimetable();
 }
 
 
@@ -243,7 +279,6 @@ function setBrickDisplacementSystem(){
 
 
 function selectTimebrick(e){
-	//e.preventDefault();
 
 	if(e.target.classList.contains("timebrick__interface")){
 		isClicking = true;
@@ -282,6 +317,7 @@ function dropTimebrick(e){
 			clearTimeout(clickHoldingTimer);
 			let timebrickToEdit = currentTimetableData.content[movingBrick.style.order];
 			setTimebrickEditor(timebrickToEdit);
+			timebrickEditor.setAttribute('data-new', 'no');
 			document.body.setAttribute('data-page', 'timebrickEditor');
 		}
 	}
@@ -357,14 +393,26 @@ function getNewOffsetY(brickToChangeWith){
 
 //Permet de modifier un élément du DOM sans le supprimer ou le recréer.
 function updateTimebrick(timebrickData){
+
 	let timebrickToUpdate = timebrickListDOM[timebrickData.order];
-	timebrickToUpdate.childNodes[0].childNodes[0].innerHTML = timebrickData.name;
+	let timebrickToUpdate_content = timebrickToUpdate.childNodes[0].childNodes;
+
+	for (let i = 0; i < timebrickToUpdate_content.length; i++) {
+		if(timebrickToUpdate_content[i].classList.contains('timebrick__duration')){
+			timebrickToUpdate_content[i].innerHTML = timebrickData.duration + ' min';
+		}
+		if(timebrickToUpdate_content[i].classList.contains('timebrick__name')){
+			timebrickToUpdate_content[i].innerHTML = timebrickData.name;
+		}
+	}
+	
 	timebrickToUpdate.className = "";
 	timebrickToUpdate.classList.add("timebrick");
 	timebrickToUpdate.classList.add(timebrickData.class);
+	
 }
 
-/*
+
 function checkTimebricksCoord(){
 	let timebrickCoord;
 	timebrickListDOM.forEach((e) => {
@@ -376,10 +424,18 @@ function checkTimebricksCoord(){
 		}
 	});
 }
-*/
+
 
 function checkAgeParameter(){
 	let currentAgeMin = parseInt(timetableParameter_ageMin.value);
 	let currentAgeMax = parseInt(timetableParameter_ageMax.value);
 	timetableParameterAgeDisplay.innerHTML = currentAgeMin + '-' + currentAgeMax + ' ans';
+}
+
+function setTimetableTitle(timetableDate){
+	let timetableYear = timetableDate.slice(0,4);
+	let timetableMonth = timetableDate.slice(5,7);
+	let timetableDay = timetableDate.slice(8,10);
+
+	timetableTitle.innerHTML = timetableDay + '/' + timetableMonth + '/' + timetableYear;
 }

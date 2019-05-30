@@ -26,7 +26,7 @@
     	<button class="buttonRevealForm">Reveal</button>
     	<h1 class="title title--timetableEditor title--white">Ma timetable</h1>
     	
-    	<div class="timetable__setter">
+    	<div class="timetable__setter timetable__setter--hidden">
     		<form class="timetable__form">
 
     			<label for="timetableDate" >Date</label>
@@ -48,10 +48,10 @@
     			</div>
 
     			<label for="timetableTheme">Thème</label>
-    			<input type="text" name="timetableTheme" id="timetableTheme" class="timetable__parameter timetable__parameter--theme">
+    			<input type="text" name="timetableTheme" id="timetableTheme" class="timetable__parameter timetable__parameter--theme" placeholder="Votre thème">
 
     			<label for="timetableSummary">Résumé</label>
-    			<input type="text" name="timetableSummary" id="timetableSummary" class="timetable__parameter timetable__parameter--summary">
+    			<input type="text" name="timetableSummary" id="timetableSummary" class="timetable__parameter timetable__parameter--summary" placeholder="Résumé de l'animation.">
 
     			<input class="buttonValidateForm" type="submit" name="timetable__parameter__validate" value="Valider">
     		</form>
@@ -63,18 +63,75 @@
     	<button class="buttonAdd buttonAdd--setTimebrick">+</button>
     </section>
 
-    <section class="page timebrickEditor">
+    <section class="page timebrickEditor" data-new='no'>
     	<button class="buttonBackTo buttonBackTo--TimetableEditor">Back</button>
+    	<h1 class="title title--timebrickEditor">Ma Timebrick</h1>
     	<button class="previousTimebrick">Previous</button>
     	<button class="nextTimebrick">Next</button>
-    	<h1>Ma Timebrick</h1>
-    	<form class="timebrickForm">
-    		<input class="timebrickForm__name" type="text" name="timebrickName" value="Name">
-    		<input class="timebrickForm__description" type="text" name="timebrickDescription" value="Description">
-    		<input class="timebrickForm__duration" type="number" name="timebrickDuration" min="5" max="240" value="5">
-    		<input class="addTimebrick" type="submit" name="timebrickSubmit">
+    	<!--
+    	<form class="timebrick__form timebrick__form--01">
+    		<label for="name">Nom</label>
+    		<input class="timebrick__parameter timebrick__parameter--name timebrick__parameter--name--01" type="text" name="timebrickName" value="Name" id="name" placeholder="Mon activité">
+
+    		<label for="duration">Durée</label>
+    		<input type="range" name="duration" class="timebrick__parameter timebrick__parameter--duration timebrick__parameter--duration--01" id="duration">
+
+    		<label for="description">Description</label>
+    		<input class="timebrick__parameter timebrick__parameter--description timebrick__parameter--description--01" type="text" name="timebrickDescription" value="Description" id="description" placeholder="Description">
+
+    		<div>
+    			<label>Matériel</label>
+    			<ul class="equipment__li equipment__li--01"></ul>
+    			<button class="addEquipment addEquipment--01">+</button>
+    		</div>
+
+    		<input class="addTimebrick addTimebrick--01" type="submit" name="timebrickSubmit">
     	</form>
-    </section>
+    -->
+    	<div class="timebrick__setter">
+    		<div class="timebrick__formContainer timebrick__formContainer--01 timebrick__formContainer--current">
+    			<form class="timebrick__form timebrick__form--01">
+		    		<label for="name">Nom</label>
+		    		<input class="timebrick__parameter timebrick__parameter--name timebrick__parameter--name--01" type="text" name="timebrickName" value="Name" id="name" placeholder="Mon activité">
+
+		    		<label for="duration">Durée</label>
+		    		<input type="range" name="duration" class="timebrick__parameter timebrick__parameter--duration timebrick__parameter--duration--01" id="duration">
+
+		    		<label for="description">Description</label>
+		    		<input class="timebrick__parameter timebrick__parameter--description timebrick__parameter--description--01" type="text" name="timebrickDescription" value="Description" id="description" placeholder="Description">
+
+		    		<div>
+		    			<label>Matériel</label>
+		    			<ul class="equipment__li equipment__li--01"></ul>
+		    			<button class="addEquipment addEquipment--01">+</button>
+		    		</div>
+
+		    		<input class="buttonAddTimebrick buttonAddTimebrick--01" type="submit" name="timebrickSubmit">
+		    	</form>
+    		</div>
+    		
+    		<div class="timebrick__formContainer timebrick__formContainer--02 timebrick__formContainer--moving timebrick__formContainer--swipeLeft">
+    			<form class="timebrick__form timebrick__form--02">
+		    		<label for="name">Nom</label>
+		    		<input class="timebrick__parameter timebrick__parameter--name timebrick__parameter--name--02" type="text" name="timebrickName" value="Name" id="name" placeholder="Mon activité">
+
+		    		<label for="duration">Durée</label>
+		    		<input type="range" name="duration" class="timebrick__parameter timebrick__parameter--duration timebrick__parameter--duration--02" id="duration">
+
+		    		<label for="description">Description</label>
+		    		<input class="timebrick__parameter timebrick__parameter--description timebrick__parameter--description--02" type="text" name="timebrickDescription" value="Description" id="description" placeholder="Description">
+
+		    		<div>
+		    			<label>Matériel</label>
+		    			<ul class="equipment__li equipment__li--02"></ul>
+		    			<button class="addEquipment addEquipment--02">+</button>
+		    		</div>
+
+		    		<input class="buttonAddTimebrick buttonAddTimebrick--02" type="submit" name="timebrickSubmit">
+		    	</form>
+    		</div>
+    	
+    	</div>
 
     <script src="timetable_selection.js"></script>
 	<script src="timetable_editor.js"></script>

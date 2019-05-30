@@ -5,16 +5,14 @@ const button_createNewTimetable = document.querySelector(".buttonAdd--createNewT
 
 const localStorage_timetableList = "timetableList";
 
-
-
+const monthAbbreviation = ['JAN', 'FEV', 'MAR', 'AVR', 'MAI', 'JUN', 'JUL', 'AOU', 'SEP', 'OCT', 'NOV', 'DEC'];
 
 
 
 /*---------------------------VAR-------------------------------------------------------------------------*/
 
 var timetableCounter;
-
-
+var timetableListDOM = [];
 
 
 
@@ -27,6 +25,8 @@ button_createNewTimetable.addEventListener("click", (e) => {
 	newTimetableData.content = [];
 	newTimetableData.title = "Ma timetable " + timetableCounter;
 	setTimetable(newTimetableData);
+	timetableSetter.classList.remove('timetable__setter--hidden');
+	console.log(timetableSetter.classList);
 	document.body.setAttribute("data-page", "timetableEditor");
 });
 
@@ -75,7 +75,10 @@ function addTimetableToList(timetableData){
 
 	let newTimetable__date = document.createElement('p');
 	newTimetable__date.classList.add('timetable__date');
-	newTimetable__date.innerHTML = `<span class='timetable__date__day'>03 </span><span class='timetable__date__month'>FEV </span>2019`;
+	let timetableYear = timetableData.date.slice(0,4);
+	let timetableMonth = monthAbbreviation[parseInt(timetableData.date.slice(5,7)) - 1];
+	let timetableDay = timetableData.date.slice(8,10);
+	newTimetable__date.innerHTML = `<span class='timetable__date__day'>${timetableDay} </span><span class='timetable__date__month'>${timetableMonth} </span>${timetableYear}`;
 
 	newTimetable__dateEmplacement.appendChild(newTimetable__date);	
 	newTimetable.appendChild(newTimetable__dateEmplacement);
@@ -85,7 +88,7 @@ function addTimetableToList(timetableData){
 
 	let newTimetable__duration = document.createElement('p');
 	newTimetable__duration.classList.add('timetable__duration');
-	newTimetable__duration.innerHTML = '8h30-17h30';
+	newTimetable__duration.innerHTML = timetableData.startTime + ' - ' + timetableData.endTime;
 	newTimetable__condensation.appendChild(newTimetable__duration);
 
 	let newTimetable__detail = document.createElement('div');
@@ -93,19 +96,19 @@ function addTimetableToList(timetableData){
 
 	let newTimetable__age = document.createElement('p');
 	newTimetable__age.classList.add('timetable__age');
-	newTimetable__age.innerHTML = '8-12 ans';
+	newTimetable__age.innerHTML = timetableData.ageMin + ' - ' + timetableData.ageMax + ' ans';
 	newTimetable__detail.appendChild(newTimetable__age);
 
 	let newTimetable__theme = document.createElement('p');
 	newTimetable__theme.classList.add('timetable__theme');
-	newTimetable__theme.innerHTML = 'Pirates';
+	newTimetable__theme.innerHTML = timetableData.theme;;
 	newTimetable__detail.appendChild(newTimetable__theme);
 
 	newTimetable__condensation.appendChild(newTimetable__detail);
 
 	let newTimetable__summary = document.createElement('p');
 	newTimetable__summary.classList.add('timetable__summary');
-	newTimetable__summary.innerHTML = 'Les enfants pourchassent des pirates MAUDITS avec des sacs de patates.';
+	newTimetable__summary.innerHTML = timetableData.summary;
 
 	newTimetable__condensation.appendChild(newTimetable__summary);
 
@@ -121,6 +124,8 @@ function addTimetableToList(timetableData){
 	newTimetable.appendChild(button_removeTimetable);
 
 	timetableList.appendChild(newTimetable);
+
+	timetableListDOM.push(newTimetable);
 }
 
 
@@ -133,11 +138,10 @@ function removeTimetableFromList(timetableToRemove){
 		return e.id != timetableToRemoveId;
 	});
 	localStorage.setItem(localStorage_timetableList, JSON.stringify(timetableListInMemory));
-}
 
-
-//Prépare les données pour mettre en place la nouvelle Timetable, et les passe à la fonction chargée de la mise en place de ladite Timetable.
-function createNewTimetable(){
+	timetableListDOM = timetableListDOM.filter((e) =>{
+		return e != timetableToRemove;
+	})
 }
 
 
@@ -149,4 +153,54 @@ function getTimetableById(id){
 			return timetableListInMemory[i];
 		}
 	}
+}
+
+
+function updateTimetable(timetableData){
+	console.log(timetableData);
+	let timetableYear = timetableData.date.slice(0,4);
+	let timetableMonth = monthAbbreviation[parseInt(timetableData.date.slice(5,7)) - 1];
+	let timetableDay = timetableData.date.slice(8,10);
+
+	timetableListDOM.forEach((e) => {
+		if (parseInt(e.getAttribute('data-timetable-id')) === timetableData.id) {
+			//Update les données;
+			let timetableChild = e.childNodes;
+			let timetableGrandchild;
+			timetableChild.forEach((child) => {
+				timetableGrandchild = child.childNodes;
+				if(child.classList.contains('timetable__dateEmplacement')){
+					timetableGrandchild.forEach((grandchild) => {
+						if(grandchild.classList.contains('timetable__date')){
+							grandchild.innerHTML = `<span class='timetable__date__day'>${timetableDay} </span><span class='timetable__date__month'>${timetableMonth} </span>${timetableYear}`;
+						}
+					});
+				}
+
+				if(child.classList.contains('timetable__condensation')){
+					timetableGrandchild.forEach((grandchild) => {
+						if(grandchild.classList.contains('timetable__duration')){
+							grandchild.innerHTML = timetableData.startTime + ' - ' + timetableData.endTime;
+						}
+						if(grandchild.classList.contains('timetable__detail')){
+							let timetableGrandgrandchild = grandchild.childNodes;
+							timetableGrandgrandchild.forEach((grandgrandchild) => {
+								if(grandgrandchild.classList.contains('timetable__age')){
+									grandgrandchild.innerHTML = timetableData.ageMin + ' - ' + timetableData.ageMax + ' ans';
+								}
+								if(grandgrandchild.classList.contains('timetable__theme')){
+									grandgrandchild.innerHTML = timetableData.theme;
+								}
+							})
+						}
+						if(grandchild.classList.contains('timetable__summary')){
+							grandchild.innerHTML = timetableData.summary;
+						}
+					});
+				}
+
+			})
+			//Supprimer l'élement de la liste DOM.
+		}
+	});
 }
