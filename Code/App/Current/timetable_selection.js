@@ -32,9 +32,9 @@ button_createNewTimetable.addEventListener("click", (e) => {
 	newTimetableData.title = "Ma timetable " + timetableCounter;
 	setTimetable(newTimetableData);
 	timetableSetter.classList.remove('timetable__setter--hidden');
-	document.body.setAttribute("data-page", "timetableEditor");
 	timetableEditor.setAttribute('data-new', 'yes');
-	timetableEditor.setAttribute('data-empty', 'yes');
+	timetableEditor.setAttribute('data-isempty', 'yes');
+	document.body.setAttribute("data-page", "timetableEditor");
 
 });
 

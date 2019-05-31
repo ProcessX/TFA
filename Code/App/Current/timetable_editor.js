@@ -112,8 +112,6 @@ button_revealForm.addEventListener('click', (e) => {
 	currentTimetableData.theme = timetableParameter_theme.value;
 	currentTimetableData.summary = timetableParameter_summary.value;
 
-	button_setTimebrick.classList.toggle('buttonAdd--hidden');
-
 	setTimebrickHour();
 });
 
@@ -137,8 +135,8 @@ timetableParameter_date.addEventListener('input', (e) => {
 })
 
 button_confirmRemoveTimebrick.addEventListener('click', (e) => {
-	removeTimebrick();
 	alertRemoveTimebrick.classList.toggle('alert--hidden');
+	removeTimebrick();
 });
 
 button_cancelRemoveTimebrick.addEventListener('click', (e) => {
@@ -515,7 +513,8 @@ function setTimebrickHour(){
 	let currentHour = parseInt(currentTimetableData.startTime.slice(0,2));
 	let currentMinute = parseInt(currentTimetableData.startTime.slice(3,5));
 
-	timebrickListDOM[0].childNodes[0].childNodes[0].innerHTML = currentTimetableData.startTime;
+	if(timebrickListDOM.length > 0)
+		timebrickListDOM[0].childNodes[0].childNodes[0].innerHTML = currentTimetableData.startTime;
 
 	for(let i = 1; i < currentTimetableData.content.length; i++){
 		currentMinute += parseInt(currentTimetableData.content[i - 1].duration);

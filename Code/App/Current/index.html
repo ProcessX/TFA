@@ -50,7 +50,55 @@
 				<button class="buttonConfirm buttonConfirm--quitTimetableEditorPage">Quitter</button>
 			</div>
 		</div>
+		<div class="placeholder">
+			<button class="buttonNavigation buttonNavigation--backTo buttonNavigation--backTo--TimetableSelection">
+	    		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M491.3 235.3H20.7C9.3 235.3 0 244.6 0 256c0 11.4 9.3 20.7 20.7 20.7h470.6c11.4 0 20.7-9.3 20.7-20.7C512 244.6 502.7 235.3 491.3 235.3z"/><path d="M49.9 256L211.8 94.1c8.1-8.1 8.1-21.2 0-29.2 -8.1-8.1-21.2-8.1-29.2 0L6.1 241.4c-8.1 8.1-8.1 21.2 0 29.2l176.5 176.5c4 4 9.3 6.1 14.6 6.1 5.3 0 10.6-2 14.6-6.1 8.1-8.1 8.1-21.2 0-29.2L49.9 256z"/></svg>
+	    	</button>
+	    	<button class="buttonNavigation buttonNavigation--revealForm">
+	    		<svg xmlns="http://www.w3.org/2000/svg" height="512" viewBox="0 0 512 512" width="512"><path d="m512 492c0 11-9 20-20 20h-236c-11 0-20-9-20-20s9-20 20-20h236c11 0 20 9 20 20zm-20-98.7h-157.3c-11 0-20 9-20 20 0 11 9 20 20 20h157.3c11 0 20-9 20-20 0-11-9-20-20-20zm0-78.7h-78.7c-11 0-20 9-20 20s9 20 20 20h78.7c11 0 20-9 20-20s-9-20-20-20zm14.1-162.5-354 354c-3.7 3.8-8.8 5.9-14.1 5.9h-118c-11 0-20-9-20-20v-118c0-5.3 2.1-10.4 5.9-14.1l354-354c7.8-7.8 20.5-7.8 28.3 0l118 118c7.8 7.8 7.8 20.5 0 28.3zm-42.4-14.1-89.7-89.7-334 334v89.7h89.7zm0 0"/></svg>
+	    	</button>
+	    	<h1 class="title title--timetableEditor title--white">Ma timetable</h1>
 
+	    	<p class="disclaimer">Appuyer sur le "<strong>+</strong>" pour ajouter une nouvelle activité.</p>
+	    	
+	    	<div class="timetable__setter timetable__setter--hidden">
+	    		<form class="timetable__form">
+
+	    			<label for="timetableDate" >Date</label>
+	    			<input type="date" name="timetableDate" id="timetableDate" class="timetable__parameter timetable__parameter--date">
+
+					<label for="timetableDurationMin">Durée</label>
+	    			<div class="timetable__parameterContainer timetable__parameterContainer--duration">
+	    				<input type="time" name="timetableDurationMin" id="timetableDurationMin" class="timetable__parameter timetable__parameter--duration timetable__parameter--duration--min" value="14:00">
+	    				<input type="time" name="timetableDurationMax" id="timetableDurationMax" class="timetable__parameter timetable__parameter--duration timetable__parameter--duration--max" value="17:30">
+	    			</div>
+
+	    			<div class="timetable__parameterContainer">
+	    				<label for="timetableAgeMin">Âge</label>
+	    				<p class="timetable__parameter__age__display">4 - 18 ans</p>
+	    			</div>
+	    			<div class="timetable__parameterContainer timetable__parameterContainer--age">
+	    				<input type="range" name="timetableAgeMin" id="timetableAgeMin" class="timetable__parameter timetable__parameter--age timetable__parameter--age--min" min="4" max="18" value="4" onchange="checkAgeParameter()">
+	    				<input type="range" name="timetableAgeMax" id="timetableAgeMax" class="timetable__parameter timetable__parameter--age timetable__parameter--age--max" min="4" max="18" value="18" onchange="checkAgeParameter()">
+	    			</div>
+
+	    			<label for="timetableTheme">Thème</label>
+	    			<input type="text" name="timetableTheme" id="timetableTheme" class="timetable__parameter timetable__parameter--theme" placeholder="Votre thème">
+
+	    			<label for="timetableSummary">Résumé</label>
+	    			<input type="text" name="timetableSummary" id="timetableSummary" class="timetable__parameter timetable__parameter--summary" placeholder="Résumé de l'animation.">
+
+	    			<input class="buttonValidateForm buttonValidateForm--timetable" type="submit" name="timetable__parameter__validate" value="Valider">
+	    		</form>
+	    	</div>
+	    
+
+	    	
+	    	<ul class="timetable"></ul>
+
+	    	<button class="buttonAdd buttonAdd--setTimebrick">+</button>
+		</div>
+		<!--
     	<button class="buttonNavigation buttonNavigation--backTo buttonNavigation--backTo--TimetableSelection">
     		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M491.3 235.3H20.7C9.3 235.3 0 244.6 0 256c0 11.4 9.3 20.7 20.7 20.7h470.6c11.4 0 20.7-9.3 20.7-20.7C512 244.6 502.7 235.3 491.3 235.3z"/><path d="M49.9 256L211.8 94.1c8.1-8.1 8.1-21.2 0-29.2 -8.1-8.1-21.2-8.1-29.2 0L6.1 241.4c-8.1 8.1-8.1 21.2 0 29.2l176.5 176.5c4 4 9.3 6.1 14.6 6.1 5.3 0 10.6-2 14.6-6.1 8.1-8.1 8.1-21.2 0-29.2L49.9 256z"/></svg>
     	</button>
@@ -95,10 +143,9 @@
 
     	
     	<ul class="timetable"></ul>
-    	<div class="buttonAdd__container">
-    		<button class="buttonAdd buttonAdd--setTimebrick">+</button>
-    	</div>
 
+    	<button class="buttonAdd buttonAdd--setTimebrick">+</button>
+-->
 
     	<div class="timebrickEditor" data-new='no'>
 	    	<div class="alert alert--quitTimebrickEditorPage alert--hidden">

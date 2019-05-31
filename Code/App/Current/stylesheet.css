@@ -58,6 +58,12 @@ input{
 	z-index: 10;
 }
 
+.placeholder{
+	width: 100vw;
+	height: 100vh;
+	position: relative;
+}
+
 .timebrickEditor{
 	position: absolute;
 	left: 0;
@@ -68,6 +74,8 @@ input{
 	height: 100vh;
 	width: 100vw;
 	background-color: var(--main-backgroundGray);
+	max-width: 100vh;
+	overflow-x: hidden;
 }
 
 .alert{
@@ -120,11 +128,6 @@ input{
 	width: auto;
 }
 
-.timebrickEditor{
-	max-width: 100vh;
-	overflow-x: hidden;
-}
-
 .title{
 	font-family: 'Nunito', sans-serif;
 	margin: 0;
@@ -141,7 +144,8 @@ input{
 }
 
 .title--timetableSelection{
-	background-color: var(--main-darkGreen);
+	background-color: var(--main-green);
+	z-index: 10;
 }
 
 .title--timetableEditor{
@@ -309,6 +313,14 @@ input{
 	border: none;
 }
 
+.buttonRemove svg{
+	fill: #D8D8D8;
+}
+
+.buttonRemove svg:hover{
+	fill: #9E9E9E;
+}
+
 .timetable{
 	width: 100%;
 	min-width: 100%;
@@ -401,6 +413,7 @@ input{
 	font-size: 45px;
 	font-family: 'Nunito', sans-serif;
 	line-height: 0;
+	z-index: 10;
 }
 
 .timetable__setter{
@@ -454,7 +467,7 @@ input{
 }
 
 .timebrick__setter{
-	min-width: 100vw;
+	min-width: 100%;
 	width: 100%;
 	position: relative;
 }
@@ -603,6 +616,10 @@ body[data-page="timebrickEditor"] .timebrickEditor{
 	display: none;
 }
 
+.app__page--timetableEditor[data-isempty='yes'] .timetable{
+	display: none;
+}
+
 .app__page[data-isempty='yes'] .buttonNavThroughTimebricks{
 	pointer-events: none;
 }
@@ -632,92 +649,22 @@ body[data-page="timebrickEditor"] .timebrickEditor{
 	}
 }
 
-@media screen and (min-width: 700px){
-	.timetable__li{
-		/*padding: 30px;*/
-	}
-
-	.timetable__el{
-		margin: 0 10px 30px 10px;
-	}
-
-}
-
-@media screen and (min-width: 740px){
-
-	.timetable__li{
-		justify-content: flex-start;
-	}
-}
-
-@media screen and (min-width: 790px){
-
-	.timetable__li{
-		width: 740px;
-	}
-}
-
 @media screen and (min-width: 1000px){
-	body[data-page="timetableEditor"]{
-		display: flex;
+		
+	.placeholder{
+		width: 40vw;
 	}
 
-	body[data-page="timebrickEditor"]{
-		display: flex;
-	}
-
-	body[data-page="timetableEditor"] .timebrickEditor{
-		display: block;
+	.timetable{
+		width: 40%;
+		max-width: 40%;
 	}
 
 	.timebrickEditor{
-		width: 100%;
-		overflow: scroll;
-	}
-
-	.timetableEditor{
-		min-width: 40%;
-		overflow: scroll;
-	}
-
-	.buttonNavigation--backTo--TimetableEditor{
-		visibility: hidden;
-	}
-
-	.timebrick__setter{
-		min-width: 100%;
-	}
-
-}
-
-@media screen and (min-width: 1100px){
-
-	.timetable__li{
-		justify-content: flex-start;
-		width: 1080px;
-	}
-}
-
-@media screen and (min-width: 1450px){
-
-	.timetable__li{
-		justify-content: flex-start;
-		width: 1420px;
-	}
-}
-
-@media screen and (min-width: 1800px){
-
-	.timetable__li{
-		justify-content: flex-start;
-		width: 1760px;
-	}
-}
-
-@media screen and (min-width: 2150px){
-
-	.timetable__li{
-		justify-content: flex-start;
-		width: 2100px;
+		width: 60vw;
+		transform: translateX(0px);
+		top: 0;
+		right: 0;
+		transition-duration: 0s;
 	}
 }
