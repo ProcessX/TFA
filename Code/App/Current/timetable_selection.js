@@ -88,6 +88,7 @@ function addTimetableToList(timetableData){
 	newTimetable.classList.add("timetable__el");
 	newTimetable.setAttribute("data-timetable-id", timetableData.id);
 	newTimetable.addEventListener("click", (e) => {
+		console.log('gfreger');
 		let timetableId = parseInt(e.target.getAttribute("data-timetable-id"));
 		let newTimetableData = getTimetableById(timetableId);
 		setTimetable(newTimetableData);
@@ -156,7 +157,7 @@ function addTimetableToList(timetableData){
 
 	timetableListDOM.push(newTimetable);
 
-	document.querySelector('.timetableSelection').setAttribute('data-isempty', 'no');
+	document.querySelector('.app__page--timetableSelection').setAttribute('data-isempty', 'no');
 }
 
 
@@ -175,7 +176,7 @@ function removeTimetableFromList(){
 	})
 
 	if(timetableListDOM.length < 1){
-		document.querySelector('.timetableSelection').setAttribute('data-isempty', 'yes');
+		document.querySelector('.app__page--timetableSelection').setAttribute('data-isempty', 'yes');
 	}
 }
 

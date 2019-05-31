@@ -4,6 +4,7 @@ const timebrickForm01 = document.querySelector('.timebrick__form--01');
 const timebrickParameter_name01 = document.querySelector('.timebrick__parameter--name--01');
 const timebrickParameter_description01 = document.querySelector('.timebrick__parameter--description--01');
 const timebrickParameter_duration01 = document.querySelector('.timebrick__parameter--duration--01');
+const timebrickDurationDisplay01 = document.querySelector('.duration__display--01');
 
 const timebrickParameterList01 = document.getElementsByClassName('timebrick__parameter--01');
 
@@ -12,6 +13,7 @@ const timebrickForm02 = document.querySelector('.timebrick__form--02');
 const timebrickParameter_name02 = document.querySelector('.timebrick__parameter--name--02');
 const timebrickParameter_description02 = document.querySelector('.timebrick__parameter--description--02');
 const timebrickParameter_duration02 = document.querySelector('.timebrick__parameter--duration--02');
+const timebrickDurationDisplay02 = document.querySelector('.duration__display--02');
 
 const timebrickParameterList02 = document.getElementsByClassName('timebrick__parameter--02');
 
@@ -43,6 +45,7 @@ var currentTimebrickParameter_description = timebrickParameter_description01;
 var currentTimebrickParameter_duration = timebrickParameter_duration01;
 var currentEquipmentList = equipmentList01;
 var currentButton__addTimebrick = button_addEquipment01;
+var currentTimebrickDurationDisplay = timebrickDurationDisplay01;
 
 var movingTimebrickFormContainer = timebrickFormContainer02;
 
@@ -129,6 +132,7 @@ button_cancelQuitTimebrickEditor.addEventListener('click', (e) => {
 	alertQuitTimebrickEditor.classList.toggle('alert--hidden');
 });
 
+
 for(let i = 0; i < timebrickParameterList01.length; i++){
 	timebrickParameterList01[i].addEventListener('input', (e) => {
 		if(currentTimebrickFormContainer === timebrickFormContainer01)
@@ -142,6 +146,7 @@ for(let i = 0; i < timebrickParameterList02.length; i++){
 			saveTimebrick();
 	});
 }
+
 
 
 
@@ -163,6 +168,8 @@ function setTimebrickEditor(timebrickData){
 	if(currentTimebrickData.duration != null){
 		currentTimebrickParameter_duration.value = parseInt(currentTimebrickData.duration);
 	}
+
+	currentTimebrickDurationDisplay.innerHTML = currentTimebrickParameter_duration.value + ' min';
 
 	currentEquipmentList.innerHTML = '';
 	timebrickData.equipment.forEach((e) => {
@@ -188,7 +195,11 @@ function saveTimebrick(){
 	}
 	else{
 		addTimebrick(currentTimebrickData);
+		setTimebrickHour();
 	}
+
+	currentTimebrickDurationDisplay.innerHTML = currentTimebrickData.duration + ' min';
+
 	saveTimetable(currentTimetableData);
 }
 
@@ -249,6 +260,7 @@ function changeMainForm(){
 		currentTimebrickParameter_description = timebrickParameter_description02;
 		currentTimebrickParameter_duration = timebrickParameter_duration02;
 		currentEquipmentList = equipmentList02;
+		currentTimebrickDurationDisplay = timebrickDurationDisplay02;
 		movingTimebrickFormContainer = timebrickFormContainer01;
 	}
 	else{
@@ -258,14 +270,16 @@ function changeMainForm(){
 		currentTimebrickParameter_description = timebrickParameter_description01;
 		currentTimebrickParameter_duration = timebrickParameter_duration01;
 		currentEquipmentList = equipmentList01;
+		currentTimebrickDurationDisplay = timebrickDurationDisplay01;
 		movingTimebrickFormContainer = timebrickFormContainer02;
 	}
 
 	timebrickFormContainer01.classList.toggle('timebrick__formContainer--moving');
 	timebrickFormContainer02.classList.toggle('timebrick__formContainer--moving');
 
+	currentTimebrickFormContainer.classList.remove('timebrick__formContainer--swipeLeft', 'timebrick__formContainer--swipeRight');
+
 	timebrickFormContainer01.classList.toggle('timebrick__formContainer--current');
 	timebrickFormContainer02.classList.toggle('timebrick__formContainer--current');
 
-	currentTimebrickFormContainer.classList.remove('timebrick__formContainer--swipeLeft', 'timebrick__formContainer--swipeRight');
 }
