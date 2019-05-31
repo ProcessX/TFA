@@ -40,9 +40,9 @@ const timetableData_base = {
 }
 
 const timebrickData_base = {
-	name: 'name',
+	name: '',
 	class: 'class',
-	description: 'description',
+	description: '',
 	duration: 5,
 	equipment: [],
 	order: 0
@@ -297,8 +297,9 @@ function removeTimebrick(){
 	}
 	saveTimetable();
 
-	if(timebrickListDOM.length < 1);
+	if(timebrickListDOM.length < 1){
 		document.querySelector('.timetableEditor').setAttribute('data-isempty', 'yes');
+	}
 }
 
 

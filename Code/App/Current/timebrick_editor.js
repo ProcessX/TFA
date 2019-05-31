@@ -5,11 +5,15 @@ const timebrickParameter_name01 = document.querySelector('.timebrick__parameter-
 const timebrickParameter_description01 = document.querySelector('.timebrick__parameter--description--01');
 const timebrickParameter_duration01 = document.querySelector('.timebrick__parameter--duration--01');
 
+const timebrickParameterList01 = document.getElementsByClassName('timebrick__parameter--01');
+
 const timebrickFormContainer02 = document.querySelector('.timebrick__formContainer--02');
 const timebrickForm02 = document.querySelector('.timebrick__form--02');
 const timebrickParameter_name02 = document.querySelector('.timebrick__parameter--name--02');
 const timebrickParameter_description02 = document.querySelector('.timebrick__parameter--description--02');
 const timebrickParameter_duration02 = document.querySelector('.timebrick__parameter--duration--02');
+
+const timebrickParameterList02 = document.getElementsByClassName('timebrick__parameter--02');
 
 const button_backToTimetableEditor = document.querySelector('.buttonNavigation--backTo--TimetableEditor');
 const button_addTimebrick01 = document.querySelector('.buttonValidateForm--timebrick--01');
@@ -71,8 +75,8 @@ button_addTimebrick01.addEventListener('click', (e) => {
 	currentTimebrickData.description = currentTimebrickParameter_description.value;
 	currentTimebrickData.duration = parseInt(currentTimebrickParameter_duration.value);
 	currentTimebrickData.class = setTimebrickClass();
-	console.log(currentTimebrickData);
 	saveTimebrick();
+	document.body.setAttribute('data-page', 'timetableEditor');
 });
 
 button_addTimebrick02.addEventListener('click', (e) => {
@@ -81,8 +85,8 @@ button_addTimebrick02.addEventListener('click', (e) => {
 	currentTimebrickData.description = currentTimebrickParameter_description.value;
 	currentTimebrickData.duration = parseInt(currentTimebrickParameter_duration.value);
 	currentTimebrickData.class = setTimebrickClass();
-	console.log(currentTimebrickData);
 	saveTimebrick();
+	document.body.setAttribute('data-page', 'timetableEditor');
 });
 
 button_previousTimebrick.addEventListener('click', (e) => {
@@ -106,6 +110,13 @@ button_nextTimebrick.addEventListener('click', (e) => {
 button_addEquipment01.addEventListener('click', (e) => {
 	e.preventDefault();
 	addEquipmentToList('');
+	saveTimebrick();
+});
+
+button_addEquipment02.addEventListener('click', (e) => {
+	e.preventDefault();
+	addEquipmentToList('');
+	saveTimebrick();
 });
 
 button_confirmQuitTimebrickEditor.addEventListener('click', (e) => {
@@ -118,6 +129,19 @@ button_cancelQuitTimebrickEditor.addEventListener('click', (e) => {
 	alertQuitTimebrickEditor.classList.toggle('alert--hidden');
 });
 
+for(let i = 0; i < timebrickParameterList01.length; i++){
+	timebrickParameterList01[i].addEventListener('input', (e) => {
+		if(currentTimebrickFormContainer === timebrickFormContainer01)
+			saveTimebrick();
+	});
+}
+
+for(let i = 0; i < timebrickParameterList02.length; i++){
+	timebrickParameterList02[i].addEventListener('input', (e) => {
+		if(currentTimebrickFormContainer === timebrickFormContainer02)
+			saveTimebrick();
+	});
+}
 
 
 
@@ -125,8 +149,11 @@ button_cancelQuitTimebrickEditor.addEventListener('click', (e) => {
 //Ajoute les données de la timebrick désirée.
 function setTimebrickEditor(timebrickData){
 	currentTimebrickData = timebrickData;
-	if(currentTimebrickData.name != null){
+	if(currentTimebrickData.name != ''){
 		currentTimebrickParameter_name.value = currentTimebrickData.name;
+	}
+	else{
+		currentTimebrickParameter_name.value = 'Mon activité (' + timebrickCounter + ')';
 	}
 
 	if(currentTimebrickData.description != null){
@@ -136,6 +163,11 @@ function setTimebrickEditor(timebrickData){
 	if(currentTimebrickData.duration != null){
 		currentTimebrickParameter_duration.value = parseInt(currentTimebrickData.duration);
 	}
+
+	currentEquipmentList.innerHTML = '';
+	timebrickData.equipment.forEach((e) => {
+		addEquipmentToList(e);
+	});
 }
 
 
@@ -144,10 +176,10 @@ function saveTimebrick(){
 	currentTimebrickData.name = currentTimebrickParameter_name.value;
 	currentTimebrickData.description = currentTimebrickParameter_description.value;
 	currentTimebrickData.duration = currentTimebrickParameter_duration.value;
-	console.log('SAVE TIMEBRICK');
-	for(let i = 0; i < currentEquipmentList.childNodes.lenght; i++){
-		currentTimebrickData.equipment = currentEquipmentList.childNodes[i].childNodes[0].value;
-		console.log(currentEquipmentList.childNodes[i].childNodes[0].value);
+	currentTimebrickData.equipment = [];
+	for(let i = 0; i < currentEquipmentList.childNodes.length; i++){
+		if(currentEquipmentList.childNodes[i].childNodes[0].value != '')
+			currentTimebrickData.equipment.push(currentEquipmentList.childNodes[i].childNodes[0].value);
 	}
 
 	if(currentTimebrickData.order < timebrickCounter){
@@ -156,7 +188,6 @@ function saveTimebrick(){
 	}
 	else{
 		addTimebrick(currentTimebrickData);
-		document.body.setAttribute('data-page', 'timetableEditor');
 	}
 	saveTimetable(currentTimetableData);
 }
@@ -184,18 +215,27 @@ function setTimebrickClass(){
 
 //Ajoute un li à la liste de matériel.
 function addEquipmentToList(equipmentData){
-	console.log(equipmentData);
-
 	let newEquipment = document.createElement('li');
 	newEquipment.classList.add('equipment__el');
 
 	let newEquipment_text = document.createElement('input');
 	newEquipment_text.classList.add('timebrick__parameter','timebrick__parameter--equipment');
 	newEquipment_text.select();
+	newEquipment_text.value = equipmentData;
+	newEquipment_text.placeholder = 'Équipement';
+	newEquipment_text.addEventListener('input', saveTimebrick);
 
 	newEquipment.appendChild(newEquipment_text);
 
-	equipmentList01.appendChild(newEquipment);
+	let button_removeEquipment = document.createElement('button');
+	button_removeEquipment.innerHTML = 'X';
+	button_removeEquipment.addEventListener('click', (e) =>{
+		currentEquipmentList.removeChild(newEquipment);
+		saveTimebrick();
+	});
+	newEquipment.appendChild(button_removeEquipment);
+
+	currentEquipmentList.appendChild(newEquipment);
 }
 
 

@@ -35,6 +35,8 @@ button_createNewTimetable.addEventListener("click", (e) => {
 	console.log(timetableSetter.classList);
 	document.body.setAttribute("data-page", "timetableEditor");
 	timetableEditor.setAttribute('data-new', 'yes');
+	timetableEditor.setAttribute('data-empty', 'yes');
+
 });
 
 for(let i = 0; i < alertBackgroundList.length; i++){

@@ -111,20 +111,22 @@
     		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M491.3 235.3H20.7C9.3 235.3 0 244.6 0 256c0 11.4 9.3 20.7 20.7 20.7h470.6c11.4 0 20.7-9.3 20.7-20.7C512 244.6 502.7 235.3 491.3 235.3z"/><path d="M49.9 256L211.8 94.1c8.1-8.1 8.1-21.2 0-29.2 -8.1-8.1-21.2-8.1-29.2 0L6.1 241.4c-8.1 8.1-8.1 21.2 0 29.2l176.5 176.5c4 4 9.3 6.1 14.6 6.1 5.3 0 10.6-2 14.6-6.1 8.1-8.1 8.1-21.2 0-29.2L49.9 256z"/></svg>
     	</button>
     	<h1 class="title title--timebrickEditor">Ma Timebrick</h1>
-    	<button class="buttonNavThroughTimebricks buttonNavThroughTimebricks--previous">Previous</button>
-    	<button class="buttonNavThroughTimebricks buttonNavThroughTimebricks--next">Next</button>
+    	<div class="buttonNavThroughTimebricks__container">
+    		<button class="buttonNavThroughTimebricks buttonNavThroughTimebricks--previous">Previous</button>
+    		<button class="buttonNavThroughTimebricks buttonNavThroughTimebricks--next">Next</button>
+    	</div>
 
     	<div class="timebrick__setter">
     		<div class="timebrick__formContainer timebrick__formContainer--01 timebrick__formContainer--current">
     			<form class="timebrick__form timebrick__form--01">
 		    		<label for="name">Nom</label>
-		    		<input class="timebrick__parameter timebrick__parameter--name timebrick__parameter--name--01" type="text" name="timebrickName" value="Name" id="name" placeholder="Mon activité">
+		    		<input class="timebrick__parameter timebrick__parameter--01  timebrick__parameter--name timebrick__parameter--name--01" type="text" name="timebrickName" id="name" placeholder="Mon activité">
 
 		    		<label for="duration">Durée</label>
-		    		<input type="range" name="duration" class="timebrick__parameter timebrick__parameter--duration timebrick__parameter--duration--01" id="duration">
+		    		<input type="range" name="duration" class="timebrick__parameter timebrick__parameter--01  timebrick__parameter--duration timebrick__parameter--duration--01" id="duration">
 
 		    		<label for="description">Description</label>
-		    		<input class="timebrick__parameter timebrick__parameter--description timebrick__parameter--description--01" type="text" name="timebrickDescription" value="Description" id="description" placeholder="Description">
+		    		<input class="timebrick__parameter timebrick__parameter--01 timebrick__parameter--description timebrick__parameter--description--01" type="text" name="timebrickDescription" id="description" placeholder="Description">
 
 		    		<div>
 		    			<label>Matériel</label>
@@ -139,13 +141,13 @@
     		<div class="timebrick__formContainer timebrick__formContainer--02 timebrick__formContainer--moving timebrick__formContainer--swipeLeft">
     			<form class="timebrick__form timebrick__form--02">
 		    		<label for="name">Nom</label>
-		    		<input class="timebrick__parameter timebrick__parameter--name timebrick__parameter--name--02" type="text" name="timebrickName" value="Name" id="name" placeholder="Mon activité">
+		    		<input class="timebrick__parameter timebrick__parameter--02  timebrick__parameter--name timebrick__parameter--name--02" type="text" name="timebrickName" value="Name" id="name" placeholder="Mon activité">
 
 		    		<label for="duration">Durée</label>
-		    		<input type="range" name="duration" class="timebrick__parameter timebrick__parameter--duration timebrick__parameter--duration--02" id="duration">
+		    		<input type="range" name="duration" class="timebrick__parameter timebrick__parameter--02  timebrick__parameter--duration timebrick__parameter--duration--02" id="duration">
 
 		    		<label for="description">Description</label>
-		    		<input class="timebrick__parameter timebrick__parameter--description timebrick__parameter--description--02" type="text" name="timebrickDescription" value="Description" id="description" placeholder="Description">
+		    		<input class="timebrick__parameter timebrick__parameter--02 timebrick__parameter--description timebrick__parameter--description--02" type="text" name="timebrickDescription" value="Description" id="description" placeholder="Description">
 
 		    		<div>
 		    			<label>Matériel</label>
