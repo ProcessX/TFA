@@ -16,7 +16,7 @@
 		<div class="alert alert--timetableSelection alert--hidden">
 			<div class="alert__background"></div>
 			<div class="alert__content">
-				<p class="alert__message">Voulez-vous supprimer l'activité <span class="alert__message__addOn"></span>?</p>
+				<p class="alert__message">Voulez-vous supprimer l'activité&nbsp;?</p>
 				<button class="buttonCancel buttonCancel--timetableSelection">Annuler</button>
 				<button class="buttonConfirm buttonConfirm--timetableSelection">Supprimer</button>
 			</div>
@@ -27,7 +27,7 @@
         <p class="disclaimer">Appuyer sur le "<strong>+</strong>" pour ajouter une nouvelle animation.</p>
         
     	<ul class="timetable__li"></ul>
-    	<button class="buttonAdd buttonAdd--createNewTimetable">+</button>
+    	<button class="buttonNavigation buttonNavigation--newTimetable">+</button>
     </section>
 
     <section class="app__page app__page--timetableEditor" data-isempty='yes'>
@@ -95,7 +95,9 @@
 
     	
     	<ul class="timetable"></ul>
-    	<button class="buttonAdd buttonAdd--setTimebrick">+</button>
+    	<div class="buttonAdd__container">
+    		<button class="buttonAdd buttonAdd--setTimebrick">+</button>
+    	</div>
 
 
     	<div class="timebrickEditor" data-new='no'>

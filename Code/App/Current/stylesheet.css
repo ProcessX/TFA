@@ -49,16 +49,12 @@ input{
 }
 
 .app__page--timetableSelection{
-	transition-duration: 2s;
-	transform: translateX(-20%);
 }
 
 .app__page--timetableEditor{
 	position: absolute;
 	left: 0;
 	top: 0;
-	transform: translateX(0%);
-	transition-duration: 2s;
 	z-index: 10;
 }
 
@@ -107,13 +103,21 @@ input{
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
 	max-width: 500px;
-	height: 400px;
+	height: 300px;
 	padding: 15px;
 	margin: auto;
-	display: block;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
 	background-color: white;
 	position: relative;
 	z-index: 10;
+	font-size: 18px;
+}
+
+.alert__content button{
+	width: auto;
 }
 
 .timebrickEditor{
@@ -155,17 +159,23 @@ input{
 	z-index: 300;
 }
 
+.buttonAdd__container{
+	width: 100%;
+	position: fixed;
+	height: 80px;
+	bottom: 0;
+}
+
 .buttonAdd{
 	font-family: 'Nunito', sans-serif;
-	font-size: 80px;
+	font-size: 60px;
 	font-weight: bolder;
 	padding: 0 0 5px 1px;
 	border: none;
-	height: 80px;
-	width: 80px;
-	position: fixed;
-	bottom: 20px;
-	left: 20px;
+	height: 60px;
+	width: 60px;
+	margin-left: auto;
+	margin-right: auto;
 	border-radius: 40px 40px 40px 40px;
 	-moz-border-radius: 40px 40px 40px 40px;
 	-webkit-border-radius: 40px 40px 40px 40px;
@@ -174,15 +184,12 @@ input{
 	-webkit-box-shadow: 4px 4px 11px 0px rgba(0,0,0,0.37);
 	-moz-box-shadow: 4px 4px 11px 0px rgba(0,0,0,0.37);
 	box-shadow: 4px 4px 11px 0px rgba(0,0,0,0.37);
-}
-
-.buttonAdd--createNewTimetable{
-	background-color: var(--main-darkGreen);
-}
-
-.buttonAdd--setTimebrick{
 	background-color: var(--main-green);
+	position: fixed;
+	bottom: 15px;
+	left: 15px;
 }
+
 
 .timetable__li{
 	width: 100%;
@@ -196,6 +203,7 @@ input{
 	flex-wrap: wrap;
 	margin: auto;
 	justify-content: center;
+	align-content: flex-start;
 	overflow-y: scroll;
 }
 
@@ -203,9 +211,9 @@ input{
 	position: relative;
 	width: 100%;
 	max-width: 320px;
-	/*
-	height: 250px;
-	*/
+	
+	height: 120px;
+	
 	border-radius: 5px 5px 5px 5px;
 	-moz-border-radius: 5px 5px 5px 5px;
 	-webkit-border-radius: 5px 5px 5px 5px;
@@ -216,6 +224,10 @@ input{
 	margin-bottom: 30px;
 	overflow: hidden;
 	display: flex;
+
+	-webkit-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.02);
+	-moz-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.02);
+	box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.02);
 }
 
 .timetable__dateEmplacement{
@@ -254,12 +266,16 @@ input{
 	box-sizing: border-box;         /* Opera/IE 8+ */
 	padding: 10px;
 	pointer-events: none;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
 }
 
 .timetable__duration{
 	font-size: 20px;
 	font-weight: bold;
 	color: #494949;
+	margin: 0;
 }
 
 .timetable__detail{
@@ -268,6 +284,11 @@ input{
 	font-weight: bold;
 	color: #707070;
 	font-size: 18px;
+	margin-top: 10px;
+}
+
+.timetable__detail p{
+	margin: 0;
 }
 
 .timetable__summary{
@@ -278,6 +299,14 @@ input{
 	position: absolute;
 	top: 10px;
 	right: 10px;
+	line-height: 0;
+	height: 20px;
+	width: 20px;
+	font-family: 'Nunito', sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	padding: 0;
+	border: none;
 }
 
 .timetable{
@@ -290,13 +319,13 @@ input{
 	box-sizing: border-box;         /* Opera/IE 8+ */
 	display: flex;
 	flex-direction: column;
+	justify-content: flex-start;
 	overflow-y: scroll;
 }
 
 .timebrick{
 	position: relative;
 	margin-bottom: 15px;
-	height: 200px;
 }
 
 .timebrick__interface{
@@ -307,10 +336,12 @@ input{
 	box-sizing: border-box;         /* Opera/IE 8+ */
 	padding: 10px;
 	height: 100%;
+	-webkit-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.02);
+	-moz-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.02);
+	box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.02);
 }
 
 .timebrick__interface--moving{
-	background-color: gray;
 	pointer-events: none;
 	z-index: 50;
 }
@@ -320,12 +351,17 @@ input{
 	font-size: 24px;
 	color: #717171;
 	pointer-events: none;
+	line-height: 0;
+	margin-top: 10px;
+	margin-bottom: 40px;
 }
 
 .timebrick__name{
 	font-size: 18px;
 	color: #989898;
 	pointer-events: none;
+	line-height: 0;
+	margin-bottom: 10px;
 }
 
 .buttonNavigation{
@@ -335,26 +371,36 @@ input{
 	height: 50px;
 	width: 50px;
 	border: none;
+	padding: 0;
+	color: white;
 }
 
 .buttonNavigation svg{
-	height: 100%;
-	width: 100%;
+	height: 50%;
+	width: 50%;
+	fill: #FFF;
 }
 
 .buttonNavigation--backTo{
 	left: 10px;
 }
 
+.buttonNavigation--backTo--TimetableEditor svg{
+	fill: #000;
+}
+
 .buttonNavigation--revealForm{
 	right: 10px;
 	transition-duration: 1s;
+	height: 50px;
+	width: 50px;
 }
 
-.buttonRevealForm svg{
-	height: 100%;
-	width: 100%;
-	fill: #FFF;
+.buttonNavigation--newTimetable{
+	right: 10px;
+	font-size: 45px;
+	font-family: 'Nunito', sans-serif;
+	line-height: 0;
 }
 
 .timetable__setter{
@@ -417,6 +463,7 @@ input{
 	position: absolute;
 	top: 0;
 	left: 0;
+	margin-top: -123px;
 	width: 100%;
 	height: 100vh;
 	padding-top: 100px;
@@ -501,10 +548,11 @@ input{
 }
 
 .disclaimer{
-	margin: 200px auto 0 auto;
+	margin: 300px auto 0 auto;
 	max-width: 300px;
 	text-align: center;
 	display: none;
+	font-size: 18px;
 }
 
 .buttonValidateForm{
@@ -516,33 +564,43 @@ input{
 	width: 100%;
 	max-width: 500px;
 	padding-top: 100px;
+	z-index: 110;
+	position: relative;
 }
 
 body[data-page="timetableSelection"] .app__page--timetableSelection{
 	transform: translateX(0%);
-	transition-duration: 2s;
+	transition-duration: 0.7s;
 }
 
 body[data-page="timetableSelection"] .app__page--timetableEditor{
 	transform: translateX(100%);
-	transition-duration: 2s; 
+	transition-duration: 0.7s; 
 }
+
 
 body[data-page="timetableEditor"] .app__page--timetableEditor{
 	transform: translateX(0%);
-	transition-duration: 2s;
+	transition-duration: 0.7s;
 }
 
+
 body[data-page="timetableEditor"] .app__page--timetableSelection{
+	transform: translateX(-20%);
+	transition-duration: 0.7s;
 }
 
 body[data-page="timebrickEditor"] .timebrickEditor{
 	transform: translateX(0%);
-	transition-duration: 2s;
+	transition-duration: 0.7s;
 }
 
 .app__page[data-isempty='yes'] .disclaimer{
 	display: block;
+}
+
+.app__page--timetableSelection[data-isempty='yes'] .timetable__li{
+	display: none;
 }
 
 .app__page[data-isempty='yes'] .buttonNavThroughTimebricks{

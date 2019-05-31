@@ -2,7 +2,7 @@
 const timetableList = document.querySelector(".timetable__li");
 const alertRemovingTimetable = document.querySelector('.alert--timetableSelection');
 
-const button_createNewTimetable = document.querySelector(".buttonAdd--createNewTimetable");
+const button_createNewTimetable = document.querySelector(".buttonNavigation--newTimetable");
 const button_cancelRemoving = document.querySelector('.buttonCancel--timetableSelection');
 const button_confirmRemoving = document.querySelector('.buttonConfirm--timetableSelection');
 
@@ -32,7 +32,6 @@ button_createNewTimetable.addEventListener("click", (e) => {
 	newTimetableData.title = "Ma timetable " + timetableCounter;
 	setTimetable(newTimetableData);
 	timetableSetter.classList.remove('timetable__setter--hidden');
-	console.log(timetableSetter.classList);
 	document.body.setAttribute("data-page", "timetableEditor");
 	timetableEditor.setAttribute('data-new', 'yes');
 	timetableEditor.setAttribute('data-empty', 'yes');
@@ -88,7 +87,6 @@ function addTimetableToList(timetableData){
 	newTimetable.classList.add("timetable__el");
 	newTimetable.setAttribute("data-timetable-id", timetableData.id);
 	newTimetable.addEventListener("click", (e) => {
-		console.log('gfreger');
 		let timetableId = parseInt(e.target.getAttribute("data-timetable-id"));
 		let newTimetableData = getTimetableById(timetableId);
 		setTimetable(newTimetableData);
@@ -100,7 +98,7 @@ function addTimetableToList(timetableData){
 
 	let newTimetable__date = document.createElement('p');
 	newTimetable__date.classList.add('timetable__date');
-	let d = '';
+	let d = ``;
 	if(timetableData.date.length > 8){
 		let timetableYear = timetableData.date.slice(0,4);
 		let timetableMonth = monthAbbreviation[parseInt(timetableData.date.slice(5,7)) - 1];
@@ -144,7 +142,7 @@ function addTimetableToList(timetableData){
 	newTimetable.appendChild(newTimetable__condensation);
 
 	let button_removeTimetable = document.createElement("button");
-	button_removeTimetable.innerHTML = "X";
+	button_removeTimetable.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213 213"><path d="M131.8 106.5l75.9-75.9c7-7 7-18.3 0-25.3 -7-7-18.3-7-25.3 0l-75.9 75.9L30.6 5.2c-7-7-18.3-7-25.3 0 -7 7-7 18.3 0 25.3l75.9 75.9L5.2 182.4c-7 7-7 18.3 0 25.3 7 7 18.3 7 25.3 0l75.9-75.9 75.9 75.9c7 7 18.3 7 25.3 0 7-7 7-18.3 0-25.3L131.8 106.5z"/></svg>`;
 	button_removeTimetable.classList.add('buttonRemove', 'buttonRemove--timetable')
 	button_removeTimetable.addEventListener("click", (e) => {
 		e.stopPropagation();
@@ -207,7 +205,7 @@ function updateTimetable(timetableData){
 				if(child.classList.contains('timetable__dateEmplacement')){
 					timetableGrandchild.forEach((grandchild) => {
 						if(grandchild.classList.contains('timetable__date')){
-							let d = '';
+							let d = ``;
 							if(timetableData.date.length > 8){
 								d = `<span class='timetable__date__day'>${timetableDay} </span><span class='timetable__date__month'>${timetableMonth} </span>${timetableYear}`;
 							}

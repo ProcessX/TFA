@@ -111,6 +111,9 @@ button_revealForm.addEventListener('click', (e) => {
 	currentTimetableData.ageMax = timetableParameter_ageMax.value;
 	currentTimetableData.theme = timetableParameter_theme.value;
 	currentTimetableData.summary = timetableParameter_summary.value;
+
+	button_setTimebrick.classList.toggle('buttonAdd--hidden');
+
 	setTimebrickHour();
 });
 
@@ -170,7 +173,6 @@ setBrickDisplacementSystem();
 /*---------------------------FUNCTIONS-------------------------------------------------------------------------*/
 //Paramètre la Timetable en fonction des données entrées en paramètre.
 function setTimetable(timetableData){
-	console.log(timetableData.id);
 	if(timetableData.id !== currentTimetableData.id){
 		timebrickListDOM = [];
 		timebrickCounter = 0;
@@ -193,7 +195,6 @@ function setTimetable(timetableData){
 			addTimebrick(timetableData.content[i]);
 		}
 		if(currentTimetableData.content.length > 0){
-			console.log('ffffffffffffffffffffffffffffffffffffff');
 			setTimebrickHour();
 		}
 	}
@@ -230,11 +231,9 @@ function saveTimetable(){
 	let timetableIndexIfAlreadySaved = timetableListInMemory.findIndex((e) => {
 		return currentTimetableData.id === e.id;
 	});
-	console.log(currentTimetableData.id);
 	if(timetableIndexIfAlreadySaved === -1){
 		timetableListInMemory.push(currentTimetableData);
 		addTimetableToList(currentTimetableData);
-		console.log('Timetable non reconnue');
 	}
 	else{
 		updateTimetable(currentTimetableData);
@@ -246,8 +245,6 @@ function saveTimetable(){
 
 //Ajoute un Timebrick à la Timetable, correpondant aux données passées en paramètre.
 function addTimebrick(timebrickData){
-
-	console.log("Add Timebrick");
 
 	currentTimetableData.content.push(timebrickData);
 
@@ -269,7 +266,6 @@ function addTimebrick(timebrickData){
 		if(isMoving){
 			e.preventDefault();
 			e.target.dispatchEvent(e);
-			console.log(e.target);
 		}
 	});
 	
@@ -283,7 +279,7 @@ function addTimebrick(timebrickData){
 	newTimebrick__interface.appendChild(newTimebrick__name);
 
 	let button_removeTimebrick = document.createElement('button');
-	button_removeTimebrick.innerHTML = 'X';
+	button_removeTimebrick.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213 213"><path d="M131.8 106.5l75.9-75.9c7-7 7-18.3 0-25.3 -7-7-18.3-7-25.3 0l-75.9 75.9L30.6 5.2c-7-7-18.3-7-25.3 0 -7 7-7 18.3 0 25.3l75.9 75.9L5.2 182.4c-7 7-7 18.3 0 25.3 7 7 18.3 7 25.3 0l75.9-75.9 75.9 75.9c7 7 18.3 7 25.3 0 7-7 7-18.3 0-25.3L131.8 106.5z"/></svg>`;
 	button_removeTimebrick.classList.add('buttonRemove');
 	button_removeTimebrick.addEventListener('click', (e) => {
 		alertRemoveTimebrick.classList.toggle('alert--hidden');
@@ -521,10 +517,7 @@ function setTimebrickHour(){
 
 	timebrickListDOM[0].childNodes[0].childNodes[0].innerHTML = currentTimetableData.startTime;
 
-	console.log(timebrickListDOM);
-
 	for(let i = 1; i < currentTimetableData.content.length; i++){
-		console.log('currentTimetableData.content');
 		currentMinute += parseInt(currentTimetableData.content[i - 1].duration);
 		if(currentMinute >= 60){
 			let modulo = currentMinute % 60;
@@ -539,8 +532,6 @@ function setTimebrickHour(){
 			hourInString += '0';
 		hourInString += currentMinute;
 		nodeToChange.innerHTML = hourInString;
-
-		console.log(i);
 
 		if(hourInString.localeCompare(currentTimetableData.startTime.endTime)){
 			nodeToChange.setAttribute('data-tooLong', 'yes');
