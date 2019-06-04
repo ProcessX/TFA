@@ -1,29 +1,23 @@
 /*---------------------------CONST-------------------------------------------------------------------------*/
-const timebrickFormContainer01 = document.querySelector('.timebrick__formContainer--01');
-const timebrickForm01 = document.querySelector('.timebrick__form--01');
-const timebrickParameter_name01 = document.querySelector('.timebrick__parameter--name--01');
-const timebrickParameter_description01 = document.querySelector('.timebrick__parameter--description--01');
-const timebrickParameter_duration01 = document.querySelector('.timebrick__parameter--duration--01');
-const timebrickDurationDisplay01 = document.querySelector('.duration__display--01');
+const timebrickFormContainer01 = document.querySelector('.setterContainer--timebrick--01');
+const timebrickParameter_name01 = document.querySelector('.textInput--timebrick--name--01');
+const timebrickParameter_description01 = document.querySelector('.textareaInput--timebrick--description--01');
+const timebrickParameter_duration01 = document.querySelector('.rangeInput--timebrick--duration--01');
+const timebrickDurationDisplay01 = document.querySelector('.setter__parameterDisplay--duration--01');
 
-const timebrickParameterList01 = document.getElementsByClassName('timebrick__parameter--01');
-
-const timebrickFormContainer02 = document.querySelector('.timebrick__formContainer--02');
-const timebrickForm02 = document.querySelector('.timebrick__form--02');
-const timebrickParameter_name02 = document.querySelector('.timebrick__parameter--name--02');
-const timebrickParameter_description02 = document.querySelector('.timebrick__parameter--description--02');
-const timebrickParameter_duration02 = document.querySelector('.timebrick__parameter--duration--02');
-const timebrickDurationDisplay02 = document.querySelector('.duration__display--02');
-
-const timebrickParameterList02 = document.getElementsByClassName('timebrick__parameter--02');
+const timebrickFormContainer02 = document.querySelector('.setterContainer--timebrick--02');
+const timebrickParameter_name02 = document.querySelector('.textInput--timebrick--name--02');
+const timebrickParameter_description02 = document.querySelector('.textareaInput--timebrick--description--02');
+const timebrickParameter_duration02 = document.querySelector('.rangeInput--timebrick--duration--02');
+const timebrickDurationDisplay02 = document.querySelector('.setter__parameterDisplay--duration--02');
 
 const button_backToTimetableEditor = document.querySelector('.buttonNavigation--backTo--TimetableEditor');
-const button_addTimebrick01 = document.querySelector('.buttonValidateForm--timebrick--01');
-const button_addTimebrick02 = document.querySelector('.buttonValidateForm--timebrick--02');
+const button_addTimebrick01 = document.querySelector('.buttonValidateSetter--timebrick--01');
+const button_addTimebrick02 = document.querySelector('.buttonValidateSetter--timebrick--02');
 const button_nextTimebrick = document.querySelector('.buttonNavThroughTimebricks--next');
 const button_previousTimebrick = document.querySelector('.buttonNavThroughTimebricks--previous');
-const button_addEquipment01 = document.querySelector('.addEquipment--01');
-const button_addEquipment02 = document.querySelector('.addEquipment--02');
+const button_addEquipment01 = document.querySelector('.buttonAddEquipment--01');
+const button_addEquipment02 = document.querySelector('.buttonAddEquipment--02');
 
 const button_confirmQuitTimebrickEditor = document.querySelector('.buttonConfirm--quitTimebrickEditorPage');
 const button_cancelQuitTimebrickEditor = document.querySelector('.buttonCancel--quitTimebrickEditorPage');
@@ -39,7 +33,6 @@ const alertQuitTimebrickEditor = document.querySelector('.alert--quitTimebrickEd
 var currentTimebrickData = Object.create(timebrickData_base);
 
 var currentTimebrickFormContainer = timebrickFormContainer01;
-var currentTimebrickForm = timebrickForm01;
 var currentTimebrickParameter_name = timebrickParameter_name01;
 var currentTimebrickParameter_description = timebrickParameter_description01;
 var currentTimebrickParameter_duration = timebrickParameter_duration01;
@@ -68,6 +61,7 @@ button_backToTimetableEditor.addEventListener('click', (e) => {
 		alertQuitTimebrickEditor.classList.toggle('alert--hidden');
 	}
 	else{
+		saveTimebrick();
 		document.body.setAttribute('data-page', 'timetableEditor');
 	}
 });
@@ -95,8 +89,9 @@ button_addTimebrick02.addEventListener('click', (e) => {
 button_previousTimebrick.addEventListener('click', (e) => {
 	let previousIndex = parseInt(currentTimebrickData.order) - 1;
 	if(previousIndex >= 0){
+		saveTimebrick();
 		changeMainForm();
-		movingTimebrickFormContainer.classList.add('timebrick__formContainer--swipeRight');
+		movingTimebrickFormContainer.classList.add('setterContainer--timebrick--swipeRight');
 		setTimebrickEditor(currentTimetableData.content[previousIndex]);
 	}
 });
@@ -104,8 +99,9 @@ button_previousTimebrick.addEventListener('click', (e) => {
 button_nextTimebrick.addEventListener('click', (e) => {
 	let nextIndex = parseInt(currentTimebrickData.order) + 1;
 	if(currentTimebrickData.order < timebrickCounter - 1){
+		saveTimebrick();
 		changeMainForm();
-		movingTimebrickFormContainer.classList.add('timebrick__formContainer--swipeLeft');
+		movingTimebrickFormContainer.classList.add('setterContainer--timebrick--swipeLeft');
 		setTimebrickEditor(currentTimetableData.content[nextIndex]);
 	}
 });
@@ -132,21 +128,23 @@ button_cancelQuitTimebrickEditor.addEventListener('click', (e) => {
 	alertQuitTimebrickEditor.classList.toggle('alert--hidden');
 });
 
+timebrickParameter_duration01.addEventListener('input', (e) => {
+	currentTimebrickDurationDisplay.innerHTML = currentTimebrickParameter_duration.value + ' min';
+	saveTimebrick();
+});
 
-for(let i = 0; i < timebrickParameterList01.length; i++){
-	timebrickParameterList01[i].addEventListener('input', (e) => {
-		if(currentTimebrickFormContainer === timebrickFormContainer01)
-			saveTimebrick();
-	});
-}
+timebrickParameter_duration02.addEventListener('input', (e) => {
+	currentTimebrickDurationDisplay.innerHTML = currentTimebrickParameter_duration.value + ' min';
+	saveTimebrick();
+});
 
-for(let i = 0; i < timebrickParameterList02.length; i++){
-	timebrickParameterList02[i].addEventListener('input', (e) => {
-		if(currentTimebrickFormContainer === timebrickFormContainer02)
-			saveTimebrick();
-	});
-}
+timebrickParameter_name01.addEventListener('input', (e) => {
+	saveTimebrick();
+});
 
+timebrickParameter_name02.addEventListener('input', (e) => {
+	saveTimebrick();
+});
 
 
 
@@ -197,8 +195,6 @@ function saveTimebrick(){
 		addTimebrick(currentTimebrickData);
 		setTimebrickHour();
 	}
-
-	currentTimebrickDurationDisplay.innerHTML = currentTimebrickData.duration + ' min';
 
 	saveTimetable(currentTimetableData);
 }
@@ -253,9 +249,8 @@ function addEquipmentToList(equipmentData){
 //Change le formulaire dont on récupérera les informations.
 function changeMainForm(){
 
-	if(timebrickFormContainer01.classList.contains('timebrick__formContainer--current')){
+	if(timebrickFormContainer01.classList.contains('setterContainer--timebrick--current')){
 		currentTimebrickFormContainer = timebrickFormContainer02;
-		currentTimebrickForm = timebrickForm02;
 		currentTimebrickParameter_name = timebrickParameter_name02;
 		currentTimebrickParameter_description = timebrickParameter_description02;
 		currentTimebrickParameter_duration = timebrickParameter_duration02;
@@ -265,7 +260,6 @@ function changeMainForm(){
 	}
 	else{
 		currentTimebrickFormContainer = timebrickFormContainer01;
-		currentTimebrickForm = timebrickForm01;
 		currentTimebrickParameter_name = timebrickParameter_name01;
 		currentTimebrickParameter_description = timebrickParameter_description01;
 		currentTimebrickParameter_duration = timebrickParameter_duration01;
@@ -274,12 +268,12 @@ function changeMainForm(){
 		movingTimebrickFormContainer = timebrickFormContainer02;
 	}
 
-	timebrickFormContainer01.classList.toggle('timebrick__formContainer--moving');
-	timebrickFormContainer02.classList.toggle('timebrick__formContainer--moving');
+	timebrickFormContainer01.classList.toggle('setterContainer--timebrick--moving');
+	timebrickFormContainer02.classList.toggle('setterContainer--timebrick--moving');
 
-	currentTimebrickFormContainer.classList.remove('timebrick__formContainer--swipeLeft', 'timebrick__formContainer--swipeRight');
+	currentTimebrickFormContainer.classList.remove('setterContainer--timebrick--swipeLeft', 'setterContainer--timebrick--swipeRight');
 
-	timebrickFormContainer01.classList.toggle('timebrick__formContainer--current');
-	timebrickFormContainer02.classList.toggle('timebrick__formContainer--current');
+	timebrickFormContainer01.classList.toggle('setterContainer--timebrick--current');
+	timebrickFormContainer02.classList.toggle('setterContainer--timebrick--current');
 
 }

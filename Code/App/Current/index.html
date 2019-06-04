@@ -50,102 +50,54 @@
 				<button class="buttonConfirm buttonConfirm--quitTimetableEditorPage">Quitter</button>
 			</div>
 		</div>
-		<div class="placeholder">
-			<button class="buttonNavigation buttonNavigation--backTo buttonNavigation--backTo--TimetableSelection">
+
+		<button class="buttonNavigation buttonNavigation--backTo buttonNavigation--backTo--TimetableSelection">
 	    		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M491.3 235.3H20.7C9.3 235.3 0 244.6 0 256c0 11.4 9.3 20.7 20.7 20.7h470.6c11.4 0 20.7-9.3 20.7-20.7C512 244.6 502.7 235.3 491.3 235.3z"/><path d="M49.9 256L211.8 94.1c8.1-8.1 8.1-21.2 0-29.2 -8.1-8.1-21.2-8.1-29.2 0L6.1 241.4c-8.1 8.1-8.1 21.2 0 29.2l176.5 176.5c4 4 9.3 6.1 14.6 6.1 5.3 0 10.6-2 14.6-6.1 8.1-8.1 8.1-21.2 0-29.2L49.9 256z"/></svg>
-	    	</button>
-	    	<button class="buttonNavigation buttonNavigation--revealForm">
-	    		<svg xmlns="http://www.w3.org/2000/svg" height="512" viewBox="0 0 512 512" width="512"><path d="m512 492c0 11-9 20-20 20h-236c-11 0-20-9-20-20s9-20 20-20h236c11 0 20 9 20 20zm-20-98.7h-157.3c-11 0-20 9-20 20 0 11 9 20 20 20h157.3c11 0 20-9 20-20 0-11-9-20-20-20zm0-78.7h-78.7c-11 0-20 9-20 20s9 20 20 20h78.7c11 0 20-9 20-20s-9-20-20-20zm14.1-162.5-354 354c-3.7 3.8-8.8 5.9-14.1 5.9h-118c-11 0-20-9-20-20v-118c0-5.3 2.1-10.4 5.9-14.1l354-354c7.8-7.8 20.5-7.8 28.3 0l118 118c7.8 7.8 7.8 20.5 0 28.3zm-42.4-14.1-89.7-89.7-334 334v89.7h89.7zm0 0"/></svg>
-	    	</button>
-	    	<h1 class="title title--timetableEditor title--white">Ma timetable</h1>
+	    </button>
+	    <button class="buttonNavigation buttonNavigation--revealForm">
+	    	<svg xmlns="http://www.w3.org/2000/svg" height="512" viewBox="0 0 512 512" width="512"><path d="m512 492c0 11-9 20-20 20h-236c-11 0-20-9-20-20s9-20 20-20h236c11 0 20 9 20 20zm-20-98.7h-157.3c-11 0-20 9-20 20 0 11 9 20 20 20h157.3c11 0 20-9 20-20 0-11-9-20-20-20zm0-78.7h-78.7c-11 0-20 9-20 20s9 20 20 20h78.7c11 0 20-9 20-20s-9-20-20-20zm14.1-162.5-354 354c-3.7 3.8-8.8 5.9-14.1 5.9h-118c-11 0-20-9-20-20v-118c0-5.3 2.1-10.4 5.9-14.1l354-354c7.8-7.8 20.5-7.8 28.3 0l118 118c7.8 7.8 7.8 20.5 0 28.3zm-42.4-14.1-89.7-89.7-334 334v89.7h89.7zm0 0"/></svg>
+	    </button>
+	    <h1 class="title title--timetableEditor title--white">Ma timetable</h1>
 
-	    	<p class="disclaimer">Appuyer sur le "<strong>+</strong>" pour ajouter une nouvelle activité.</p>
+	    <p class="disclaimer">Appuyer sur le "<strong>+</strong>" pour ajouter une nouvelle activité.</p>
 	    	
-	    	<div class="timetable__setter timetable__setter--hidden">
-	    		<form class="timetable__form">
+	    <div class="setterContainer setterContainer--timetable setterContainer--timetable--hidden">
+	    	<form class="setter setter--timetable timetable__form">
+	    		
 
-	    			<label for="timetableDate" >Date</label>
-	    			<input type="date" name="timetableDate" id="timetableDate" class="timetable__parameter timetable__parameter--date">
+	    		<label class="label label--setter" for="timetableDate" >Date</label>
+	    		<input type="date" name="timetableDate" id="timetableDate" class="setter__parameter dateInput dateInput--timetable">
 
-					<label for="timetableDurationMin">Durée</label>
-	    			<div class="timetable__parameterContainer timetable__parameterContainer--duration">
-	    				<input type="time" name="timetableDurationMin" id="timetableDurationMin" class="timetable__parameter timetable__parameter--duration timetable__parameter--duration--min" value="14:00">
-	    				<input type="time" name="timetableDurationMax" id="timetableDurationMax" class="timetable__parameter timetable__parameter--duration timetable__parameter--duration--max" value="17:30">
-	    			</div>
+				<label class="label--setter" for="timetableDurationMin">Durée</label>
+	    		<div class="setter__parameterContainer setter__parameterContainer--duration">
+	    				<input type="time" name="timetableDurationMin" id="timetableDurationMin" class="setter__parameter timeInput timeInput--timetable timeInput--timetable--min" value="14:00">
+	    				<input type="time" name="timetableDurationMax" id="timetableDurationMax" class="setter__parameter timeInput timeInput--timetable timeInput--timetable--max" value="17:30">
+	    		</div>
 
-	    			<div class="timetable__parameterContainer">
-	    				<label for="timetableAgeMin">Âge</label>
-	    				<p class="timetable__parameter__age__display">4 - 18 ans</p>
-	    			</div>
-	    			<div class="timetable__parameterContainer timetable__parameterContainer--age">
-	    				<input type="range" name="timetableAgeMin" id="timetableAgeMin" class="timetable__parameter timetable__parameter--age timetable__parameter--age--min" min="4" max="18" value="4" onchange="checkAgeParameter()">
-	    				<input type="range" name="timetableAgeMax" id="timetableAgeMax" class="timetable__parameter timetable__parameter--age timetable__parameter--age--max" min="4" max="18" value="18" onchange="checkAgeParameter()">
-	    			</div>
+	    		<div class="setter__labelContainer timetable__parameterContainer">
+	    				<label class="label--setter" for="timetableAgeMin">Âge</label>
+	    				<p class="setter__parameterDisplay setter__parameterDisplay--timetable setter__parameterDisplay--timetable--age timetable__parameter__age__display">4 - 18 ans</p>
+	    		</div>
+	    		<div class="setter__parameterContainer setter__parameterContainer--slider">
+	    				<input type="range" name="timetableAgeMin" id="timetableAgeMin" class="setter__parameter rangeInput rangeInput--timetable rangeInput--timetable--age rangeInput--timetable--age--min" min="4" max="18" value="4" onchange="checkAgeParameter()">
+	    				<input type="range" name="timetableAgeMax" id="timetableAgeMax" class="setter__parameter rangeInput rangeInput--timetable rangeInput--timetable--age rangeInput--timetable--age--max" min="4" max="18" value="18" onchange="checkAgeParameter()">
+	    		</div>
 
-	    			<label for="timetableTheme">Thème</label>
-	    			<input type="text" name="timetableTheme" id="timetableTheme" class="timetable__parameter timetable__parameter--theme" placeholder="Votre thème">
+	    		<label class="label--setter" for="timetableTheme">Thème</label>
+	    		<input type="text" name="timetableTheme" id="timetableTheme" class="setter__parameter textInput textInput--timetable textInput--timetable--theme timetable__parameter timetable__parameter--theme" placeholder="Votre thème">
 
-	    			<label for="timetableSummary">Résumé</label>
-	    			<input type="text" name="timetableSummary" id="timetableSummary" class="timetable__parameter timetable__parameter--summary" placeholder="Résumé de l'animation.">
+	    		<label class="label--setter" for="timetableSummary">Résumé</label>
+	    		<input type="textarea" name="timetableSummary" id="timetableSummary" class="setter__parameter textareaInput textareaInput--timetable textareaInput--timetable--symmary timetable__parameter timetable__parameter--summary" placeholder="Résumé de l'animation.">
 
-	    			<input class="buttonValidateForm buttonValidateForm--timetable" type="submit" name="timetable__parameter__validate" value="Valider">
-	    		</form>
-	    	</div>
+	    		<input class="buttonValidateSetter buttonValidateSetter--timetable buttonValidateForm buttonValidateForm--timetable" type="submit" name="timetable__parameter__validate" value="Valider">
+	    	</form>
+	    </div>
 	    
 
 	    	
-	    	<ul class="timetable"></ul>
+	    <ul class="timetable"></ul>
 
-	    	<button class="buttonAdd buttonAdd--setTimebrick">+</button>
-		</div>
-		<!--
-    	<button class="buttonNavigation buttonNavigation--backTo buttonNavigation--backTo--TimetableSelection">
-    		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M491.3 235.3H20.7C9.3 235.3 0 244.6 0 256c0 11.4 9.3 20.7 20.7 20.7h470.6c11.4 0 20.7-9.3 20.7-20.7C512 244.6 502.7 235.3 491.3 235.3z"/><path d="M49.9 256L211.8 94.1c8.1-8.1 8.1-21.2 0-29.2 -8.1-8.1-21.2-8.1-29.2 0L6.1 241.4c-8.1 8.1-8.1 21.2 0 29.2l176.5 176.5c4 4 9.3 6.1 14.6 6.1 5.3 0 10.6-2 14.6-6.1 8.1-8.1 8.1-21.2 0-29.2L49.9 256z"/></svg>
-    	</button>
-    	<button class="buttonNavigation buttonNavigation--revealForm">
-    		<svg xmlns="http://www.w3.org/2000/svg" height="512" viewBox="0 0 512 512" width="512"><path d="m512 492c0 11-9 20-20 20h-236c-11 0-20-9-20-20s9-20 20-20h236c11 0 20 9 20 20zm-20-98.7h-157.3c-11 0-20 9-20 20 0 11 9 20 20 20h157.3c11 0 20-9 20-20 0-11-9-20-20-20zm0-78.7h-78.7c-11 0-20 9-20 20s9 20 20 20h78.7c11 0 20-9 20-20s-9-20-20-20zm14.1-162.5-354 354c-3.7 3.8-8.8 5.9-14.1 5.9h-118c-11 0-20-9-20-20v-118c0-5.3 2.1-10.4 5.9-14.1l354-354c7.8-7.8 20.5-7.8 28.3 0l118 118c7.8 7.8 7.8 20.5 0 28.3zm-42.4-14.1-89.7-89.7-334 334v89.7h89.7zm0 0"/></svg>
-    	</button>
-    	<h1 class="title title--timetableEditor title--white">Ma timetable</h1>
-
-    	<p class="disclaimer">Appuyer sur le "<strong>+</strong>" pour ajouter une nouvelle activité.</p>
-    	
-    	<div class="timetable__setter timetable__setter--hidden">
-    		<form class="timetable__form">
-
-    			<label for="timetableDate" >Date</label>
-    			<input type="date" name="timetableDate" id="timetableDate" class="timetable__parameter timetable__parameter--date">
-
-				<label for="timetableDurationMin">Durée</label>
-    			<div class="timetable__parameterContainer timetable__parameterContainer--duration">
-    				<input type="time" name="timetableDurationMin" id="timetableDurationMin" class="timetable__parameter timetable__parameter--duration timetable__parameter--duration--min" value="14:00">
-    				<input type="time" name="timetableDurationMax" id="timetableDurationMax" class="timetable__parameter timetable__parameter--duration timetable__parameter--duration--max" value="17:30">
-    			</div>
-
-    			<div class="timetable__parameterContainer">
-    				<label for="timetableAgeMin">Âge</label>
-    				<p class="timetable__parameter__age__display">4 - 18 ans</p>
-    			</div>
-    			<div class="timetable__parameterContainer timetable__parameterContainer--age">
-    				<input type="range" name="timetableAgeMin" id="timetableAgeMin" class="timetable__parameter timetable__parameter--age timetable__parameter--age--min" min="4" max="18" value="4" onchange="checkAgeParameter()">
-    				<input type="range" name="timetableAgeMax" id="timetableAgeMax" class="timetable__parameter timetable__parameter--age timetable__parameter--age--max" min="4" max="18" value="18" onchange="checkAgeParameter()">
-    			</div>
-
-    			<label for="timetableTheme">Thème</label>
-    			<input type="text" name="timetableTheme" id="timetableTheme" class="timetable__parameter timetable__parameter--theme" placeholder="Votre thème">
-
-    			<label for="timetableSummary">Résumé</label>
-    			<input type="text" name="timetableSummary" id="timetableSummary" class="timetable__parameter timetable__parameter--summary" placeholder="Résumé de l'animation.">
-
-    			<input class="buttonValidateForm buttonValidateForm--timetable" type="submit" name="timetable__parameter__validate" value="Valider">
-    		</form>
-    	</div>
-    
-
-    	
-    	<ul class="timetable"></ul>
-
-    	<button class="buttonAdd buttonAdd--setTimebrick">+</button>
--->
+	    <button class="buttonAdd buttonAdd--setTimebrick">+</button>
 
     	<div class="timebrickEditor" data-new='no'>
 	    	<div class="alert alert--quitTimebrickEditorPage alert--hidden">
@@ -168,50 +120,52 @@
 	    	</div>
 
 	    	<div class="timebrick__setter">
-	    		<div class="timebrick__formContainer timebrick__formContainer--01 timebrick__formContainer--current">
-	    			<form class="timebrick__form timebrick__form--01">
-			    		<label for="name">Nom</label>
-			    		<input class="timebrick__parameter timebrick__parameter--01  timebrick__parameter--name timebrick__parameter--name--01" type="text" name="timebrickName" id="name" placeholder="Mon activité">
-			    		<div>
-			    			<label for="duration">Durée</label>
-			    			<p class="duration__display duration__display--01">10h20</p>
+	    		<div class="setterContainer setterContainer--timebrick setterContainer--timebrick--01 setterContainer--timebrick--current">
+	    			<form class="setter setter--timebrick timebrick__form timebrick__form--01">
+			    		<label class="label label--setter" for="name">Nom</label>
+			    		<input class="setter__parameter textInput textInput--timebrick textInput--timebrick--name textInput--timebrick--name--01" type="text" name="timebrickName" id="name" placeholder="Mon activité">
+			    		<div class="setter__labelContainer">
+			    			<label class="label label--setter" for="duration">Durée</label>
+			    			<p class="setter__parameterDisplay setter__parameterDisplay--duration setter__parameterDisplay--duration--01">10h20</p>
 			    		</div>
-			    		<input type="range" name="duration" class="timebrick__parameter timebrick__parameter--01  timebrick__parameter--duration timebrick__parameter--duration--01" id="duration">
+			    		<div class="setter__parameterContainer setter__parameterContainer--slider">
+			    			<input type="range" name="duration" class="setter__parameter rangeInput rangeInput--timebrick rangeInput--timebrick--duration rangeInput--timebrick--duration--01" id="duration" min="5" max="180">
+			    		</div>
 
-			    		<label for="description">Description</label>
-			    		<input class="timebrick__parameter timebrick__parameter--01 timebrick__parameter--description timebrick__parameter--description--01" type="text" name="timebrickDescription" id="description" placeholder="Description">
+			    		<label class="label label--setter" for="description">Description</label>
+			    		<input class="setter__parameter textareaInput textareaInput--timebrick textareaInput--timebrick--description textareaInput--timebrick--description--01" type="text" name="timebrickDescription" id="description" placeholder="Description">
 
-			    		<div>
-			    			<label>Matériel</label>
+			    		<label class="label label--setter">Matériel</label>
+			    		<div class="setter__parameterContainer setter__parameterContainer--equipment">
 			    			<ul class="equipment__li equipment__li--01"></ul>
-			    			<button class="addEquipment addEquipment--01">+</button>
+			    			<button class="buttonAddEquipment buttonAddEquipment--01">+</button>
 			    		</div>
 
-			    		<input class="buttonValidateForm buttonValidateForm--timebrick buttonValidateForm--timebrick--01" type="submit" name="timebrickSubmit">
+			    		<input class="buttonValidateSetter buttonValidateSetter--timebrick buttonValidateSetter--timebrick--01" type="submit" name="timebrickSubmit">
 			    	</form>
 	    		</div>
 	    		
-	    		<div class="timebrick__formContainer timebrick__formContainer--02 timebrick__formContainer--moving timebrick__formContainer--swipeLeft">
-	    			<form class="timebrick__form timebrick__form--02">
-			    		<label for="name">Nom</label>
-			    		<input class="timebrick__parameter timebrick__parameter--02  timebrick__parameter--name timebrick__parameter--name--02" type="text" name="timebrickName" id="name" placeholder="Mon activité">
+	    		<div class="setterContainer setterContainer--timebrick setterContainer--timebrick--02 setterContainer--timebrick--moving setterContainer--timebrick--swipeLeft">
+	    			<form class="setter setter--timebrick timebrick__form timebrick__form--02">
+			    		<label class="label label--setter" for="name">Nom</label>
+			    		<input class="setter__parameter textInput textInput--timebrick textInput--timebrick--name textInput--timebrick--name--02" type="text" name="timebrickName" id="name" placeholder="Mon activité">
 
-			    		<div>
-			    			<label for="duration">Durée</label>
-			    			<p class="duration__display duration__display--02">10h20</p>
+			    		<div class="setter__labelContainer">
+			    			<label class="label label--setter" for="duration">Durée</label>
+			    			<p class="setter__parameterDisplay setter__parameterDisplay--duration setter__parameterDisplay--duration--02">10h20</p>
 			    		</div>
-			    		<input type="range" name="duration" class="timebrick__parameter timebrick__parameter--02  timebrick__parameter--duration timebrick__parameter--duration--02" id="duration">
+			    		<input type="range" name="duration" class="setter__parameter rangeInput rangeInput--timebrick rangeInput--timebrick--duration rangeInput--timebrick--duration--02" id="duration" min="5" max="180">
 
-			    		<label for="description">Description</label>
-			    		<input class="timebrick__parameter timebrick__parameter--02 timebrick__parameter--description timebrick__parameter--description--02" type="text" name="timebrickDescription" id="description" placeholder="Description">
+			    		<label class="label label--setter" for="description">Description</label>
+			    		<input class="setter__parameter textareaInput textareaInput--timebrick textareaInput--timebrick--description textareaInput--timebrick--description--02" type="text" name="timebrickDescription" id="description" placeholder="Description">
 
-			    		<div>
-			    			<label>Matériel</label>
+			    		<label class="label label--setter">Matériel</label>
+			    		<div class="setter__parameterContainer setter__parameterContainer--equipment">
 			    			<ul class="equipment__li equipment__li--02"></ul>
-			    			<button class="addEquipment addEquipment--02">+</button>
+			    			<button class="buttonAddEquipment buttonAddEquipment--02">+</button>
 			    		</div>
 
-			    		<input class="buttonValidateForm buttonValidateForm--timebrick buttonValidateForm--timebrick--02" type="submit" name="timebrickSubmit">
+			    		<input class="buttonValidateSetter buttonValidateSetter--timebrick buttonValidateSetter--timebrick--02 buttonValidateForm buttonValidateForm--timebrick buttonValidateForm--timebrick--02" type="submit" name="timebrickSubmit">
 			    	</form>
 	    		</div>
 	    	

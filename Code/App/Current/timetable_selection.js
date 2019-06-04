@@ -90,6 +90,7 @@ function addTimetableToList(timetableData){
 		let timetableId = parseInt(e.target.getAttribute("data-timetable-id"));
 		let newTimetableData = getTimetableById(timetableId);
 		setTimetable(newTimetableData);
+		timetableEditor.setAttribute('data-new', 'no');
 		document.body.setAttribute("data-page", "timetableEditor");
 	});
 

@@ -2,8 +2,8 @@
 const timetableTitle = document.querySelector(".title--timetableEditor");
 const timetable = document.querySelector(".timetable");
 const timetableEditor = document.querySelector(".app__page--timetableEditor");
-const timetableSetter = document.querySelector('.timetable__setter');
-const timetableParameterAgeDisplay = document.querySelector('.timetable__parameter__age__display');
+const timetableSetter = document.querySelector('.setterContainer--timetable');
+const timetableParameterAgeDisplay = document.querySelector('.setter__parameterDisplay--timetable--age');
 const timebrickEditor = document.querySelector('.timebrickEditor');
 const alertRemoveTimebrick = document.querySelector('.alert--removingTimebrick');
 const alertQuitPage = document.querySelector('.alert--quitTimetableEditorPage');
@@ -17,13 +17,13 @@ const button_cancelRemoveTimebrick = document.querySelector('.buttonCancel--remo
 const button_confirmQuitPage = document.querySelector('.buttonConfirm--quitTimetableEditorPage');
 const button_cancelQuitPage = document.querySelector('.buttonCancel--quitTimetableEditorPage');
 
-const timetableParameter_date = document.querySelector('.timetable__parameter--date');
-const timetableParameter_durationMin = document.querySelector('.timetable__parameter--duration--min');
-const timetableParameter_durationMax = document.querySelector('.timetable__parameter--duration--max');
-const timetableParameter_ageMin = document.querySelector('.timetable__parameter--age--min');
-const timetableParameter_ageMax = document.querySelector('.timetable__parameter--age--max');
-const timetableParameter_theme = document.querySelector('.timetable__parameter--theme');
-const timetableParameter_summary = document.querySelector('.timetable__parameter--summary');
+const timetableParameter_date = document.querySelector('.dateInput--timetable');
+const timetableParameter_durationMin = document.querySelector('.timeInput--timetable--min');
+const timetableParameter_durationMax = document.querySelector('.timeInput--timetable--max');
+const timetableParameter_ageMin = document.querySelector('.rangeInput--timetable--age--min');
+const timetableParameter_ageMax = document.querySelector('.rangeInput--timetable--age--max');
+const timetableParameter_theme = document.querySelector('.textInput--timetable--theme');
+const timetableParameter_summary = document.querySelector('.textareaInput--timetable--symmary');
 
 //Cet object donne la structure de données nécessaire pour paramétrer une Timetable.
 const timetableData_base = {
@@ -85,7 +85,7 @@ var att = document.createAttribute("data-tooLong");
 button_backToTimetableSelection.addEventListener("click", (e) => {
 	if(currentTimetableData.content.length >= 1){
 		saveTimetable();
-		timetableSetter.classList.add('timetable__setter--hidden');
+		timetableSetter.classList.add('setterContainer--timetable--hidden');
 		document.body.setAttribute("data-page", "timetableSelection");
 		timebrickEditor.setAttribute('data-new', 'yes');
 	}
@@ -103,7 +103,7 @@ button_setTimebrick.addEventListener("click", (e) => {
 });
 
 button_revealForm.addEventListener('click', (e) => {
-	timetableSetter.classList.toggle('timetable__setter--hidden');
+	timetableSetter.classList.toggle('setterContainer--timetable--hidden');
 	currentTimetableData.date = timetableParameter_date.value;
 	currentTimetableData.startTime = timetableParameter_durationMin.value;
 	currentTimetableData.endTime = timetableParameter_durationMax.value;
@@ -124,7 +124,7 @@ button_validateForm.addEventListener('click', (e) => {
 	currentTimetableData.ageMax = timetableParameter_ageMax.value;
 	currentTimetableData.theme = timetableParameter_theme.value;
 	currentTimetableData.summary = timetableParameter_summary.value;
-	timetableSetter.classList.toggle('timetable__setter--hidden');
+	timetableSetter.classList.toggle('setterContainer--timetable--hidden');
 	timetableEditor.setAttribute('data-new', 'no');
 });
 
@@ -151,7 +151,7 @@ button_confirmQuitPage.addEventListener('click', (e) => {
 		}
 	});
 
-	timetableSetter.classList.add('timetable__setter--hidden');
+	timetableSetter.classList.add('setterContainer--timetable--hidden');
 	document.body.setAttribute("data-page", "timetableSelection");
 	timebrickEditor.setAttribute('data-new', 'yes');
 	alertQuitPage.classList.toggle('alert--hidden');
@@ -195,6 +195,7 @@ function setTimetable(timetableData){
 		if(currentTimetableData.content.length > 0){
 			setTimebrickHour();
 		}
+		setTimebrickEditor(timetableData.content[0])
 	}
 }
 
