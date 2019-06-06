@@ -1,0 +1,354 @@
+body{
+	margin: 0;
+	--main-blueBackground: #001070;
+	--main-darkBlueBackground: #000941;
+	--main-yellowTitle: #ffea00;
+	--main-graySubtitle: #a4a4a4;
+	font-family: 'Work Sans', sans-serif;
+	height: 100vh;
+	max-height: 100vh;
+	max-width: 100vw;
+	width: 100vw;
+	overflow: hidden;
+}
+
+.noiseOverlay{
+	height: 100vh;
+	width: 100vw;
+	background-image: url(img/noise.gif);
+	background-repeat: repeat;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	pointer-events: none;
+	opacity: 0.08;
+}
+
+.vCard{
+	background-color: var(--main-blueBackground);
+	background: url(img/david_mobileBackground.gif) no-repeat center center; 
+  	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+	color: white;
+	padding: 30px;
+	min-height: 100vh;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+
+.vCard__content{
+	margin-top: 150px;
+	max-width: 450px;
+	margin: 0 auto 0 auto;
+}
+
+.title{
+	color: var(--main-yellowTitle);
+	font-family: 'Playfair Display', serif;
+	font-size: 60px;
+	line-height: 1.2em;
+}
+
+.title--vCard{
+	text-align: right;
+	margin-bottom: 0;
+	margin-top: 70px;
+}
+
+.subtitle{
+	color: var(--main-graySubtitle);
+	font-size: 45px;
+	font-family: 'Playfair Display', serif;
+}
+
+.vCard__situation{
+	font-family: 'Playfair Display', serif;
+	color: var(--main-graySubtitle);
+	font-size: 30px;
+	text-align: right;
+	margin-bottom: 100px;
+	margin-top: 0.6em;
+}
+
+.textBlock{
+	font-size: 20px;
+	line-height: 1.4em;
+	margin-bottom: 1em;
+	margin-top: 0;
+	color: white;
+}
+
+.vCard__description--link{
+	color: white;
+}
+
+.vCard__description--link:hover,focus{
+	color: var(--main-yellowTitle);
+}
+
+.vCard__social__li {
+	display: flex;
+	justify-content: space-between;
+	list-style: none;
+	padding: 0;
+	width: 100%;
+	max-width: 450px;
+	margin: 68px auto 100px auto;
+}
+
+.vCard__social__el{
+	height: 40px;
+	width: 40px;
+	overflow: hidden;
+	text-indent: 100%;
+}
+
+.vCard__social{
+	display: block;
+	overflow: hidden;
+	text-indent: 100%;
+	width: inherit;
+	height: inherit;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+}
+
+.vCard__social--mail{
+	background-image: url(img/mail.gif);
+
+}
+
+.vCard__social--facebook{
+	background-image: url(img/facebook.gif);
+}
+
+.vCard__social--medium{
+	background-image: url(img/medium.gif);
+}
+
+.vCard__social--pinterest{
+	background-image: url(img/pinterest.gif);
+}
+
+.vCard__deco{
+	max-width: 450px;
+	margin-right: 90px;
+	position: relative;
+}
+
+.vCard__david{
+	max-width: 100%;
+}
+
+.btn{}
+
+.btn--toPortfolio{
+	position: absolute;
+	top: 330px;
+	left: 113px;
+	font-weight: bold;
+	padding: 5px;
+	font-size: 24px;
+	background-color: black;
+	color: white;
+	border: none;
+	background-size: cover;
+}
+
+.btn--toPortfolio:hover,focus{
+	background-image: url(img/david_dick@1x.gif);
+	color: transparent;
+}
+
+.portfolio{
+	background-color: var(--main-darkBlueBackground);
+	min-height: 100vh;
+	width: 100vw;
+	max-width: 100vw;
+	max-height: 100vh;
+	overflow-y: scroll;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 0;
+	direction: flex;
+	
+	position: absolute;
+	top: 0;
+	left: 0;
+	transform: translateY(100vh);
+	transition-duration: 1s;
+
+	z-index: 500;
+	
+}
+
+.portfolio--show{
+	transform: translateY(0);
+	transition-duration: 1s;
+}
+
+.portfolio__container{
+	width: 100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.title--portfolio{
+	text-align: right;
+	margin-right: 30px;
+	margin-top: 120px;
+}
+
+.subtitle--year{
+	border-bottom: solid 2px var(--main-graySubtitle);
+	max-width: 800px;
+	margin: 0 auto 80px auto;
+}
+
+.subtitle--project{
+	font-size: 30px;
+	color: var(--main-yellowTitle);
+	margin-bottom: 40px;
+}
+
+.project__li{
+	list-style: none;
+	padding: 0;
+}
+
+.project__el{
+	position: relative;
+	max-width: 550px;
+	margin: 0 auto 120px auto;
+	padding-bottom: 20px;
+}
+
+.project__link{
+	text-decoration: none;
+}
+
+.project__el:after{
+	content: "";
+	height: 20px;
+	width: 30%;
+	border-bottom: solid 1px var(--main-graySubtitle);
+	position: absolute;
+	left: 35%;
+	bottom: 0;
+}
+
+.project__description{
+	color: white;
+}
+
+.goBack{
+	color: white;
+	position: absolute;
+	top: 40px;
+	left: 30px;
+	font-size: 20px;
+	font-family: 'Playfair Display', serif;
+	text-decoration: none;
+}
+
+.goBack:hover,focus{
+	text-decoration: underline;
+}
+
+@media screen and (max-width: 1000px){
+	.vCard__description--desktop{
+		display: none;
+	}
+
+	.vCard__deco{
+		display: none;
+	}
+}
+
+@media screen and (min-width: 1000px){
+	.vCard__description--mobile{
+		display: none;
+	}
+
+	.vCard{
+		flex-direction: row;
+		background: none;
+		background-color: var(--main-blueBackground);
+	}
+
+	.vCard__content{
+		margin: 0;
+		min-width: 400px;
+		max-width: 500px;
+	}
+
+	.title--vCard{
+		text-align: left;
+		margin-left: -180px;
+		z-index: 500;
+		position: relative;
+		font-size: 80px;
+	}
+
+	.vCard__info{
+	}
+
+	.vCard__situation{
+		text-align: left;
+		margin-bottom: 2em;
+	}
+
+	.vCard__social__li{
+		position: absolute;
+		top: 30px;
+		right: 30px;
+		margin: 0;
+	}
+
+}
+
+@media screen and (min-width: 1300px){
+
+	.portfolio{
+		background-color: var(--main-darkBlueBackground);
+		min-height: 100vh;
+		width: 100vw;
+		max-width: 100vw;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+
+	}
+
+	.portfolio__container{
+		height: 100vh;
+		max-height: 100vh;
+		overflow-y: scroll;
+		width: 100%;
+		padding: 90px 30px 0 30px;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+
+	.title--portfolio{
+		text-align: right;
+		position: absolute;
+		right: 30px;
+		top: 30px;
+		margin-top: 40px;
+		line-height: 0em;
+	}
+}
