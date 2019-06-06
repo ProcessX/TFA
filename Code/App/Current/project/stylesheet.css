@@ -1,0 +1,868 @@
+body{
+	margin: 0;
+	font-family: 'Open Sans', sans-serif;
+	--main-darkGreen: #015b3f;
+	--main-green: #01b47c;
+	--main-backgroundGray: #ededed;
+	background-color: var(--main-backgroundGray);
+}
+
+ul{
+	margin: 0;
+	padding: 0;
+}
+
+li{
+	list-style: none;
+}
+
+button{
+	background: none;
+}
+
+input{
+	border: none;
+}
+
+.app__container{
+	width: 100vw;
+	max-width: 100vw;
+	height: 100vh;
+	max-height: 100vh;
+	overflow: hidden;
+	position: relative;
+}
+
+.app__page{
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	min-height: 100vh;
+	position: relative;
+	width: 100vw;
+	max-width: 100vw;
+	height: 100vh;
+
+	overflow-x: hidden;
+
+	background-color: var(--main-backgroundGray);
+}
+
+.app__page--timetableSelection{
+}
+
+.app__page--timetableEditor{
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 10;
+}
+
+.placeholder{
+	width: 100vw;
+	height: 100vh;
+	position: relative;
+}
+
+.timebrickEditor{
+	position: absolute;
+	left: 0;
+	top: 0;
+	transform: translateX(100%);
+	transition-duration: 0.7s;
+	z-index: 500;
+	height: 100vh;
+	width: 100vw;
+	min-width: 100vw;
+	background-color: var(--main-backgroundGray);
+	max-width: 100vh;
+	overflow-x: hidden;
+}
+
+.alert{
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	height: 100vh;
+	width: 100%;
+	padding: 0 50px 0 50px;
+	position: fixed;
+	z-index: 1000;
+	display: flex;
+	text-align: center;
+}
+
+.alert--hidden{
+	visibility: hidden;
+	pointer-events: none;
+}
+
+.alert__background{
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: black;
+	opacity: 0.5;
+}
+
+.alert__content{
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	max-width: 500px;
+	height: 300px;
+	padding: 15px;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
+	background-color: white;
+	position: relative;
+	z-index: 10;
+	font-size: 18px;
+}
+
+.alert__content button{
+	width: auto;
+}
+
+.title{
+	font-family: 'Nunito', sans-serif;
+	margin: 0;
+	text-align: center;
+	padding: 15px 0 15px 0;
+	font-size: 30px;
+	position: absolute;
+	width: 100%;
+	z-index: 20;
+}
+
+.title--white{
+	color: white;
+}
+
+.title--timetableSelection{
+	background-color: var(--main-green);
+	z-index: 10;
+}
+
+.title--timetableEditor{
+	background-color: var(--main-green);
+	border-bottom-style: solid;
+	border-color: var(--main-darkGreen);
+	border-bottom-width: 1px;
+}
+
+.title--timebrickEditor{
+	border-bottom-style: solid;
+	border-color: gray;
+	border-bottom-width: 1px;
+	background-color: var(--main-backgroundGray);
+	z-index: 300;
+}
+
+.buttonAdd__container{
+	width: 100%;
+	position: fixed;
+	height: 80px;
+	bottom: 0;
+}
+
+.buttonAdd{
+	font-family: 'Nunito', sans-serif;
+	font-size: 60px;
+	font-weight: bolder;
+	padding: 0 0 5px 1px;
+	border: none;
+	height: 60px;
+	width: 60px;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 40px 40px 40px 40px;
+	-moz-border-radius: 40px 40px 40px 40px;
+	-webkit-border-radius: 40px 40px 40px 40px;
+	color: white;
+	line-height: 0em;
+	-webkit-box-shadow: 4px 4px 11px 0px rgba(0,0,0,0.37);
+	-moz-box-shadow: 4px 4px 11px 0px rgba(0,0,0,0.37);
+	box-shadow: 4px 4px 11px 0px rgba(0,0,0,0.37);
+	background-color: var(--main-green);
+	position: fixed;
+	bottom: 15px;
+	left: 15px;
+}
+
+
+.timetable__li{
+	width: 100%;
+	height: 100vh;
+	max-height: 100vh;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	padding: 100px 30px 30px 30px;
+	display: flex;
+	flex-wrap: wrap;
+	margin: auto;
+	justify-content: center;
+	align-content: flex-start;
+	overflow-y: scroll;
+}
+
+.timetable__el{
+	position: relative;
+	width: 100%;
+	max-width: 320px;
+	
+	height: 120px;
+	
+	border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	background-color: white;
+	margin-bottom: 30px;
+	overflow: hidden;
+	display: flex;
+
+	-webkit-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.02);
+	-moz-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.02);
+	box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.02);
+}
+
+.timetable__dateEmplacement{
+	background-color: var(--main-green);
+	height: 100%;
+	width: 60px;
+	min-width: 60px;
+	pointer-events: none;
+	/*
+	display: flex;
+	align-items: center;
+	*/
+}
+
+.timetable__date{
+	color: white;
+	text-align: center;
+	max-width: 100%;
+	margin: 0;
+}
+
+.timetable__date__day{
+	font-size: 36px;
+	font-weight: bold;
+}
+
+.timetable__date__month{
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.timetable__condensation{
+	width: 100%;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	padding: 10px;
+	pointer-events: none;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+
+.timetable__duration{
+	font-size: 20px;
+	font-weight: bold;
+	color: #494949;
+	margin: 0;
+}
+
+.timetable__detail{
+	display: flex;
+	justify-content: space-between;
+	font-weight: bold;
+	color: #707070;
+	font-size: 18px;
+	margin-top: 10px;
+}
+
+.timetable__detail p{
+	margin: 0;
+}
+
+.timetable__summary{
+	color: #707070;
+}
+
+.buttonRemove{
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	line-height: 0;
+	height: 20px;
+	width: 20px;
+	font-family: 'Nunito', sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	padding: 0;
+	border: none;
+}
+
+.buttonRemove svg{
+	fill: #D8D8D8;
+}
+
+.buttonRemove svg:hover{
+	fill: #9E9E9E;
+}
+
+.timetable{
+	width: 100%;
+	min-width: 100%;
+	height: 100vh;
+	padding: 100px 30px 30px 30px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	overflow-y: scroll;
+}
+
+.timebrick{
+	position: relative;
+	margin-bottom: 15px;
+	
+	min-width: 100%;
+}
+
+.timebrick__interface{
+	position: relative;
+	background-color: white;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	padding: 10px;
+	height: 100%;
+	-webkit-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.02);
+	-moz-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.02);
+	box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.02);
+}
+
+.timebrick__interface--moving{
+	pointer-events: none;
+	z-index: 50;
+}
+
+.timebrick__duration{
+	font-weight: bold;
+	font-size: 24px;
+	color: #717171;
+	pointer-events: none;
+	line-height: 0;
+	margin-top: 10px;
+	margin-bottom: 40px;
+}
+
+.timebrick__name{
+	font-size: 18px;
+	color: #989898;
+	pointer-events: none;
+	line-height: 0;
+	margin-bottom: 10px;
+}
+
+.buttonNavigation{
+	position: absolute;
+	top: 10px;
+	z-index: 500;
+	height: 50px;
+	width: 50px;
+	border: none;
+	padding: 0;
+	color: white;
+}
+
+.buttonNavigation svg{
+	height: 50%;
+	width: 50%;
+	fill: #FFF;
+}
+
+.buttonNavigation--backTo{
+	left: 10px;
+}
+
+.buttonNavigation--backTo--TimetableEditor svg{
+	fill: #000;
+}
+
+.buttonNavigation--revealForm{
+	right: 10px;
+	transition-duration: 1s;
+	height: 50px;
+	width: 50px;
+}
+
+.buttonNavigation--newTimetable{
+	right: 10px;
+	font-size: 45px;
+	font-family: 'Nunito', sans-serif;
+	line-height: 0;
+	z-index: 10;
+}
+
+.setterContainer--timetable{
+	-webkit-box-sizing: border-box; 
+	-moz-box-sizing: border-box;    
+	box-sizing: border-box;  
+	padding: 0px 30px 0 30px;
+	width: 100%;
+	min-height: 100vh;
+	max-height: 100vh;
+	background-color: var(--main-green);
+	position: absolute;
+	top: 0px;
+	z-index: 15;
+	transition-duration: 1s;
+	overflow-y: scroll;
+}
+
+.setterContainer--timetable--hidden{
+	transform: translateY(-100%);
+}
+
+.setterContainer--timebrick{
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin-top: -123px;
+	width: 100%;
+	height: 100vh;
+	padding-top: 100px;
+	transition-duration: 0.7s;
+	transform: translateX(0px);
+	background-color: var(--main-backgroundGray);;
+	z-index: 50;
+	overflow-y: scroll;
+	-webkit-box-sizing: border-box; 
+	-moz-box-sizing: border-box;    
+	box-sizing: border-box;
+}
+
+.setterContainer--timebrick--current{
+	transition-duration: 0s;
+	transition-delay: 0.1s;
+	-webkit-box-shadow: 0px 0px 93px 200px rgba(0,0,0,0.48);
+	-moz-box-shadow: 0px 0px 93px 200px rgba(0,0,0,0.48);
+	box-shadow: 0px 0px 93px 200px rgba(0,0,0,0.48);
+
+}
+
+.setterContainer--timebrick--revealing{
+	transition-delay: 0s;
+	transition-duration: 2s;
+	background-color: red;
+}
+
+.setterContainer--timebrick--moving{
+	transition-duration: 0;
+	z-index: 100;
+}
+
+.setterContainer--timebrick--swipeLeft{
+	transform: translateX(-100%);
+}
+
+.setterContainer--timebrick--swipeRight{
+	transform: translateX(100%);
+}
+
+.setter{
+	margin: auto;
+	max-width: 400px;
+}
+
+
+.timebrick__setter{
+	min-width: 100%;
+	width: 100%;
+	position: relative;
+}
+
+
+
+.setter--timebrick{
+	padding: 30px;
+}
+
+.setter--timebrick .label--setter{
+	color: black;
+}
+
+.setter--timetable{
+	padding-top: 120px;
+}
+
+.setter__explanation{
+
+}
+
+.label{} 
+
+.label--setter{
+	font-weight: bold;
+	font-size: 24px;
+	color: white;
+	margin-bottom: 15px;
+}
+
+.setter__labelContainer{
+	display: flex;
+	justify-content: space-between;
+}
+
+.setter__parameter{
+	margin: auto;
+	width: 100%;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 20px;
+	margin-bottom: 30px;
+	padding-inline-start: 0px;
+}
+
+.timeInput--timetable--min{
+	margin-right: 30px;
+}
+
+.rangeInput--timetable--age{
+	-webkit-appearance: none;
+  	width: 100%;
+  	margin: 5.5px 0;
+}
+
+.rangeInput--timetable--age--min{
+	margin-bottom: 15px;
+}
+
+.setter__parameterDisplay{
+	font-size: 24px;
+	color: var(--main-backgroundGray);
+	margin: 0;
+}
+
+.setter__parameterDisplay--duration{
+	color: black;
+}
+
+.rangeInput::-webkit-slider-runnable-track{
+	background-color: var(--main-backgroundGray);
+	height: 10px;
+	border-radius: 25px;
+}
+
+.rangeInput::-webkit-slider-thumb{
+	box-shadow: 2.1px 2.1px 4.2px rgba(0, 0, 0, 0.44), 0px 0px 2.1px rgba(13, 13, 13, 0.44);
+	height: 20px;
+  	width: 20px;
+  	border-radius: 10px;
+  	background: var(--main-backgroundGray);
+  	cursor: pointer;
+  	-webkit-appearance: none;
+  	margin-top: -5.5px;
+}
+
+.rangeInput::-webkit-slider-thumb:hover,focus{
+	height: 20px;
+  	width: 20px;
+  	border-radius: 10px;
+  	background-color: var(--main-darkGreen);
+  	box-shadow: 2.1px 2.1px 4.2px rgba(0, 0, 0, 0.8), 0px 0px 2.1px rgba(13, 13, 13, 0.8);
+  	
+}
+
+.setter__parameterContainer{
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 30px;
+	-webkit-box-sizing: border-box; 
+	-moz-box-sizing: border-box;    
+	box-sizing: border-box; 
+}
+
+.setter__parameterContainer .setter__parameter{
+	margin-bottom: 0;
+}
+
+.timetable__parameterContainer--age{
+	flex-wrap: wrap;
+}
+
+.setter__parameterContainer--slider{
+	flex-wrap: wrap;
+	background-color: white;
+	padding: 15px;
+}
+
+.setter__parameterContainer--slider .setter__parameter{
+	margin-bottom: 15px;
+}
+
+
+.setter__parameterContainer--equipment{
+	background-color: white;
+	padding: 15px 15px 0 15px;
+	flex-direction: column;
+}
+
+.disclaimer{
+	margin: 300px auto 0 auto;
+	max-width: 300px;
+	text-align: center;
+	display: none;
+	font-size: 18px;
+}
+
+.buttonValidateForm{
+	visibility: hidden;
+	pointer-events: none;
+	transition-duration: 1s;
+}
+
+.buttonNavThroughTimebricks__container{
+	width: 100%;
+	max-width: 100%;
+	padding: 100px 15px 30px 15px;
+	z-index: 110;
+	position: relative;
+	background-color: var(--main-backgroundGray);
+	display: flex;
+	justify-content: space-between;
+	-webkit-box-sizing: border-box; 
+	-moz-box-sizing: border-box;    
+	box-sizing: border-box;
+}
+
+.equipment__el{
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 15px;
+	font-size: 20px;
+}
+
+.buttonAddEquipment{
+	width: 30px;
+	height: 30px;
+	margin: 30px auto 15px auto;
+	font-size: 30px;
+	line-height: 0;
+	border-radius: 15px;
+	border: none;
+	font-weight: bold;
+}
+
+.buttonValidateSetter{
+	margin-top: 30px;
+	font-weight: bold;
+	font-size: 24px;
+	background-color: var(--main-green);
+	padding: 15px;
+	color: white;
+	visibility: hidden;
+	transition-duration: 1s;
+}
+
+.buttonValidateSetter--timetable{
+	border: 2px solid white;
+}
+
+.buttonValidateSetter:hover,focus{
+	background-color: var(--main-darkGreen);
+}
+
+.timetable__summary{
+	display: none;
+}
+
+.grayOverlay{
+	content: "";
+	height: 100vh;
+	width: 100vw;
+	background-color: #606060;
+	z-index: 5000;
+	position: fixed;
+	top: 0;
+	left: 0;
+	pointer-events: none;
+	transition-duration: 0.7s;
+}
+
+.grayOverlay--hidden{
+	transition-duration: 0.7s;
+	transform: translateX(-100%);
+}
+
+body[data-page="timetableSelection"] .app__page--timetableSelection{
+	transform: translateX(0%);
+	transition-duration: 0.7s;
+}
+
+body[data-page="timetableSelection"] .app__page--timetableEditor{
+	transform: translateX(100%);
+	transition-duration: 0.7s; 
+}
+
+
+body[data-page="timetableEditor"] .app__page--timetableEditor{
+	transform: translateX(0%);
+	transition-duration: 0.7s;
+}
+
+
+body[data-page="timetableEditor"] .app__page--timetableSelection{
+	transform: translateX(-20%);
+	transition-duration: 0.7s;
+}
+
+body[data-page="timebrickEditor"] .timebrickEditor{
+	transform: translateX(0%);
+	transition-duration: 0.7s;
+}
+
+.app__page[data-isempty='yes'] .disclaimer{
+	display: block;
+}
+
+.app__page--timetableSelection[data-isempty='yes'] .timetable__li{
+	display: none;
+}
+
+.app__page--timetableEditor[data-isempty='yes'] .timetable{
+	display: none;
+}
+
+.app__page[data-isempty='yes'] .buttonNavThroughTimebricks{
+	pointer-events: none;
+}
+
+.app__page--timetableEditor[data-new="yes"] .buttonNavigation--revealForm{
+	opacity: 0;
+	pointer-events: none;
+}
+
+.app__page--timetableEditor[data-new="yes"] .buttonValidateSetter--timetable{
+	visibility: visible;
+	pointer-events: all;
+}
+
+.timebrickEditor[data-new="yes"] .buttonValidateSetter{
+	visibility: visible;
+	pointer-events: all;
+}
+
+.timebrickEditor[data-new="yes"] .buttonNavThroughTimebricks{
+	pointer-events: none;
+}
+
+
+@media screen and (min-width: 430px){
+	.timebrick{
+		min-width: 400px;
+		max-width: 400px;
+	}
+}
+
+@media screen and (min-width: 730px){
+	.timetable__li{
+		justify-content: flex-start;
+		padding-left: calc(((100vw - 730px) / 2) + 30px);
+		padding-right: calc((100vw - 730px) / 2);
+	}
+
+	.timetable__el{
+		margin-right: 30px;
+	}
+}
+
+@media screen and (min-width: 1000px){
+		
+	.app__page--timetableEditor{
+		display: flex;
+	}
+
+	.timetable{
+		width: 40%;
+		max-width: 40%;
+		min-width: 0;
+	}
+
+	.timebrickEditor{
+		width: 60%;
+		max-width: 60%;
+		min-width: 60%;
+		transform: translateX(0px);
+		position: relative;
+		z-index: 0;
+		border-left: solid 1px gray;
+	}
+
+	.title--timebrickEditor{
+		visibility: hidden;
+	}
+}
+
+@media screen and (min-width: 1080px){
+	.timetable__li{
+		justify-content: flex-start;
+		padding-left: calc(((100vw - 1080px) / 2) + 30px);
+		padding-right: calc((100vw - 1080px) / 2);
+	}
+}
+
+@media screen and (min-width: 1430px){
+	.timetable__li{
+		justify-content: flex-start;
+		padding-left: calc(((100vw - 1430px) / 2) + 30px);
+		padding-right: calc((100vw - 1430px) / 2);
+	}
+}
+
+@media screen and (min-width: 1780px){
+	.timetable__li{
+		justify-content: flex-start;
+		padding-left: calc(((100vw - 1780px) / 2) + 30px);
+		padding-right: calc((100vw - 1780px) / 2);
+	}
+}
+
+@media screen and (min-width: 2030px){
+	.timetable__li{
+		justify-content: flex-start;
+		padding-left: calc(((100vw - 2030px) / 2) + 30px);
+		padding-right: calc((100vw - 2030px) / 2);
+	}
+}
+
+@media screen and (min-width: 2380px){
+	.timetable__li{
+		justify-content: flex-start;
+		padding-left: calc(((100vw - 2380px) / 2) + 30px);
+		padding-right: calc((100vw - 2380px) / 2);
+	}
+}
+
+@media screen and (min-width: 2730px){
+	.timetable__li{
+		justify-content: flex-start;
+		padding-left: calc(((100vw - 2730px) / 2) + 30px);
+		padding-right: calc((100vw - 2730px) / 2);
+	}
+}
